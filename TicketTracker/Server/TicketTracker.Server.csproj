@@ -8,11 +8,15 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="6.0.16" />
+    <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="7.0.7">
+      <PrivateAssets>all</PrivateAssets>
+      <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+    </PackageReference>
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\TicketTracker.Service\TicketTracker.Service.csproj" />
     <ProjectReference Include="..\Client\TicketTracker.Client.csproj" />
-    <ProjectReference Include="..\Shared\TicketTracker.Shared.csproj" />
   </ItemGroup>
 
 
