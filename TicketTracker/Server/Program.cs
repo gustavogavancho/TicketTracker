@@ -1,3 +1,4 @@
+using FluentValidation.AspNetCore;
 using Microsoft.EntityFrameworkCore;
 using TicketTracker.Repository.Data;
 
@@ -5,6 +6,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
+builder.Services.AddFluentValidationAutoValidation(options =>
+{
+    options.DisableDataAnnotationsValidation = true;
+});
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<TicketTrackerContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("TicketTrackerContext") ?? throw new InvalidOperationException("Connection string 'TicketTrackerServerContext' not found.")));

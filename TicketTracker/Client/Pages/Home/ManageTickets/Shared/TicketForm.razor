@@ -1,0 +1,46 @@
+﻿<EditForm Model="_ticket">
+    <FluentValidationValidator />
+    <ValidationSummary />
+
+    <FormSection Title="Details and amount"
+                 HelpText="A ticket is a commercial document that provides a detailed summary of a transaction between a seller and a buyer. It serves as a request for payment or as evidence of a financial transaction.">
+
+        <FormFieldSet Width="col-6">
+            <label for="ticketNumber" class="form-label text-muted"><b>Ticket Number</b></label>
+            <InputText @bind-Value="_ticket.TicketNumber" class="form-control" id="ticketNumber" />
+            <ValidationMessage For="@(() => _ticket.TicketNumber)" />
+        </FormFieldSet>
+
+        <FormFieldSet Width="col-6">
+            <label for="nit" class="form-label text-muted"><b>Nit</b></label>
+            <InputNumber @bind-Value="_ticket.Nit" class="form-control" id="nit" />
+            <ValidationMessage For="@(() => _ticket.Nit)" />
+        </FormFieldSet>
+
+        <FormFieldSet>
+            <label for="description" class="form-label text-muted"><b>Description</b></label>
+            <InputText @bind-Value="_ticket.Description" class="form-control" id="description" />
+            <ValidationMessage For="@(() => _ticket.Description)" />
+        </FormFieldSet>
+
+        <FormFieldSet Width="col-6">
+            <label for="amount" class="form-label text-muted"><b>Amount</b></label>
+            <InputNumber @bind-Value="_ticket.Amount" class="form-control" id="amount" />
+            <ValidationMessage For="@(() => _ticket.Amount)" />
+        </FormFieldSet>
+    </FormSection>
+
+    <div class="mt-4 mb-5">
+        <div class="row">
+            <div class="offset-4 col-8 text-end">
+                <button class="btn btn-outline-secondary" type="button">Reset</button>
+                <button class="btn btn-primary" type="submit">Submit</button>
+            </div>
+        </div>
+    </div>
+
+</EditForm>
+
+@code {
+    private TicketDto _ticket = new TicketDto();
+}
