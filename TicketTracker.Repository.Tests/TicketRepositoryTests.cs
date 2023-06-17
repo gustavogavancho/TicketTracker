@@ -1,5 +1,32 @@
-﻿namespace TicketTracker.Repository.Tests;
+﻿using AutoFixture;
+using TicketTracker.Repository.Tests.ClassFixture;
+using TicketTracker.Shared.Entities;
 
-public class TicketRepositoryTests
+namespace TicketTracker.Repository.Tests;
+
+public class TicketRepositoryTests : IClassFixture<TicketTrackerContextClassFixture>
 {
+    private readonly TicketTrackerContextClassFixture _contextFixture;
+    private readonly Fixture _fixture;
+    private readonly TicketRepository _repository;
+
+    public TicketRepositoryTests(TicketTrackerContextClassFixture contextFixture)
+    {
+        _contextFixture = contextFixture;
+        _fixture = new Fixture();   
+        _repository = new TicketRepository(_contextFixture.Context);
+    }
+
+    [Fact]
+    public async Task TicketRepository_CreateTicket_Successfully()
+    {
+        //Arrange
+        var ticket = _fixture.Create<Ticket>();
+
+        //Act
+        var sut = await _repository.CreateTicket(ticket);
+        
+        //Assert
+        Assert.NotNull(sut);
+    }
 }
