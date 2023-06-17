@@ -28,5 +28,6 @@ public class TicketRepositoryTests : IClassFixture<TicketTrackerContextClassFixt
         
         //Assert
         Assert.NotNull(sut);
+        Assert.IsType<Ticket>(sut);
     }
 }
