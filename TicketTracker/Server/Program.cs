@@ -3,6 +3,7 @@ using TicketTracker.Repository.Data;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 builder.Services.AddControllers();
 builder.Services.AddRazorPages();
 builder.Services.AddDbContext<TicketTrackerContext>(options =>
