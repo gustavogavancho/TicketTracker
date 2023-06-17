@@ -4,6 +4,7 @@ using Moq;
 using TicketTracker.Repository.Interfaces;
 using TicketTracker.Service.Profiles;
 using TicketTracker.Shared.Dtos;
+using TicketTracker.Shared.Entities;
 
 namespace TicketTracker.Service.Tests;
 
@@ -27,6 +28,8 @@ public class TicketServiceTests
     {
         //Arrange
         var ticketDto = _fixture.Create<TicketDto>();
+
+        _repository.Setup(x => x.CreateTicket(It.IsAny<Ticket>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
 
         //Act
         var sut = await _service.CreateTicket(ticketDto);

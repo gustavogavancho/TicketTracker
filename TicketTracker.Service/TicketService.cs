@@ -2,6 +2,7 @@
 using TicketTracker.Repository.Interfaces;
 using TicketTracker.Service.Interfaces;
 using TicketTracker.Shared.Dtos;
+using TicketTracker.Shared.Entities;
 
 namespace TicketTracker.Service;
 
@@ -17,8 +18,10 @@ public class TicketService : ITicketService
         _mapper = mapper;
     }
 
-    public Task<TicketDto> CreateTicket(TicketDto ticketDto)
+    public async Task<TicketDto> CreateTicket(TicketDto ticketDto)
     {
-        throw new NotImplementedException();
+        var ticket = await _repository.CreateTicket(_mapper.Map<Ticket>(ticketDto));
+
+        return _mapper.Map<TicketDto>(ticket);
     }
 }
