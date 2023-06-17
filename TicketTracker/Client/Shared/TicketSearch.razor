@@ -5,8 +5,9 @@
     <p class="lead text-center">Collect all your tickets that are tax deductible in one single place!</p>
     <p class="mt-4">
         <input @onkeydown="SearchForTrail"
-        @bind="_searchTerm"
-        @bind:event="oninput"
+               @bind="_searchTerm"
+               @bind:event="oninput"
+               @ref=myInput
                type="text"
                placeholder="Search for a ticket..."
                class="form-control form-control-lg" />
@@ -15,6 +16,15 @@
 
 @code {
     private string _searchTerm = "";
+    private ElementReference myInput;
+
+    protected override async Task OnAfterRenderAsync(bool firstRender)
+    {
+        if (firstRender)
+        {
+            await myInput.FocusAsync();
+        }
+    }
 
     private void SearchForTrail(KeyboardEventArgs args)
     {
