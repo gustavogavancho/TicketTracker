@@ -3,15 +3,11 @@
 @inherits TestContext
 
 @code{
-    private readonly Fixture _fixture = new();
-
     [Fact]
     public void TicketFormComponent_ShouldDisplayFormSections()
     {
         // Arrange
-        var ticketDto = _fixture.Create<TicketDto>();
-        var editContext = new EditContext(ticketDto);
-        var cut = Render(@<TicketForm Ticket="ticketDto"></TicketForm>);
+        var cut = RenderComponent<TicketForm>();
 
         // Act
         var ticketNumberFieldSet = cut.Find("[for='ticketNumber']").ParentElement;
@@ -27,5 +23,31 @@
         Assert.Contains("Description", descriptionFieldSet.InnerHtml);
         Assert.Contains("Amount", amountFieldSet.InnerHtml);
         Assert.Contains("Image", imageFieldSet.InnerHtml);
+    }
+
+    [Fact]
+    public void TicketFormComponent_ResetsAllFields()
+    {
+        // Arrange
+        var component = RenderComponent<TicketForm>();
+
+        component.Find("#ticketNumber").Change("1");
+        component.Find("#nit").Change("12345");
+        component.Find("#description").Change("Test Description");
+        component.Find("#amount").Change("100.5");
+
+        // Act
+        component.Find("button").Click();
+
+        // Assert
+        var ticketNumber = component.Find("#ticketNumber").GetAttribute("value");
+        var nit = component.Find("#nit").GetAttribute("value");
+        var description = component.Find("#description").GetAttribute("value");
+        var amount = component.Find("#amount").GetAttribute("value");
+
+        Assert.Null(ticketNumber);
+        Assert.Null(nit);
+        Assert.Null(description);
+        Assert.Null(amount);
     }
 }
