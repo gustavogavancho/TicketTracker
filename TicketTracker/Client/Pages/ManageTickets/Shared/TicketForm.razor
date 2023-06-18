@@ -83,16 +83,15 @@
 
     private void LoadTrailImage(InputFileChangeEventArgs e)
     {
-        throw new NotImplementedException();
+        _image = e.File;
+        _ticket.ImageAction = ImageAction.Add;
     }
 
     private void RemoveTrailImage()
     {
-        throw new NotImplementedException();        
+        _ticket.Image = null;
+        _ticket.ImageAction = ImageAction.Remove;
     }
 
-    private async Task SubmitForm()
-    {
-        throw new NotImplementedException();
-    }
+    private async Task SubmitForm() => await OnSubmit(_ticket, _image);
 }

@@ -8,10 +8,17 @@ public class TicketDto
     public long? Nit { get; set; }
     public string Description { get; set; } = default!;
     public decimal? Amount { get; set; }
+    public ImageAction ImageAction { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public string? Image { get; set; } = default!;
 }
 
+public enum ImageAction
+{
+    None,
+    Add,
+    Remove
+}
 public class TicketValidator : AbstractValidator<TicketDto>
 {
     public TicketValidator()

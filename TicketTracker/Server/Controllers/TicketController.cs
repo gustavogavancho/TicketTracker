@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using TicketTracker.Service.Interfaces;
 
 namespace TicketTracker.Server.Controllers;
 
@@ -6,4 +7,12 @@ namespace TicketTracker.Server.Controllers;
 [ApiController]
 public class TicketController : ControllerBase
 {
+    private readonly ITicketService _service;
+
+    public TicketController(ITicketService service)
+    {
+        _service = service;
+    }
+
+
 }
