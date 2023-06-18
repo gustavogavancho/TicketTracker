@@ -20,13 +20,15 @@ public class TicketService : ITicketService
 
     public async Task<TicketDto> CreateTicket(TicketDto ticketDto)
     {
-        var ticket = await _repository.CreateTicket(_mapper.Map<Ticket>(ticketDto));
+        var result = await _repository.CreateTicket(_mapper.Map<Ticket>(ticketDto));
 
-        return _mapper.Map<TicketDto>(ticket);
+        return _mapper.Map<TicketDto>(result);
     }
 
-    public Task<TicketDto> GetTicket(int ticketId)
+    public async Task<TicketDto> GetTicket(int ticketId)
     {
-        throw new NotImplementedException();
+        var result = await _repository.GetTicket(ticketId);
+
+        return _mapper.Map<TicketDto>(result);
     }
 }
