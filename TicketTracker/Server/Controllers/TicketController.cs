@@ -15,11 +15,27 @@ public class TicketController : ControllerBase
         _service = service;
     }
 
-    [HttpPost]
-    public async Task<IActionResult> CreateTicket(TicketDto ticket)
+    [HttpGet("{id:int}", Name = "GetById")]
+    public async Task<IActionResult> GetTicket(int id)
     {
-        var result = await _service.CreateTicket(ticket);
+        var result = await _service.GetTicket(id);
 
         return Ok(result);
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreateTicket(TicketDto ticketDto)
+    {
+        var result = await _service.CreateTicket(ticketDto);
+
+        return CreatedAtRoute("GetById", new { id = ticketDto.Id}, result);
+    }
+
+    [HttpPut("{id:int}")]
+    public async Task<IActionResult> UpdateTicket(int ticketId, TicketDto ticketDto)
+    {
+        await _service.UpdateTicket(ticketId, ticketDto);
+
+        return NoContent();
     }
 }

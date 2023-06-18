@@ -4,6 +4,7 @@ namespace TicketTracker.Shared.Dtos;
 
 public class TicketDto
 {
+    public int Id { get; set; }
     public string TicketNumber { get; set; } = default!;
     public long? Nit { get; set; }
     public string Description { get; set; } = default!;
