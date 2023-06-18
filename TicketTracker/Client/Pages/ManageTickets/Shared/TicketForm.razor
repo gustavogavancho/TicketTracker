@@ -1,6 +1,6 @@
-﻿<EditForm Model="_ticket" OnValidSubmit="SubmitForm">
+﻿<EditForm EditContext="_editContext" OnValidSubmit="SubmitForm">
+
     <FluentValidationValidator />
-    <ValidationSummary />
 
     <FormSection Title="Details and amount"
                  HelpText="A ticket is a commercial document that provides a detailed summary of a transaction between a seller and a buyer. It serves as a request for payment or as evidence of a financial transaction.">
@@ -51,7 +51,7 @@
     <div class="mt-4 mb-5">
         <div class="row">
             <div class="offset-4 col-8 text-end">
-                <button class="btn btn-outline-secondary" type="button">Reset</button>
+                <button class="btn btn-outline-secondary" type="button" @onclick="ResetForm">Reset</button>
                 <button class="btn btn-primary" type="submit">Submit</button>
             </div>
         </div>
@@ -61,6 +61,25 @@
 
 @code {
     private TicketDto _ticket = new TicketDto();
+    private IBrowserFile? _image;
+    private EditContext _editContext = default!;
+
+    [Parameter, EditorRequired] public Func<TicketDto, IBrowserFile?, Task> OnSubmit { get; set; } = default!;
+    [Parameter] public TicketDto? Ticket { get; set; }
+
+    protected override void OnParametersSet()
+    {
+        _editContext = new EditContext(_ticket);
+        _editContext.SetFieldCssClassProvider(new BootstrapCssClassProvider());
+    }
+
+    public void ResetForm()
+    {
+        _ticket = new TicketDto();
+        _editContext = new EditContext(_ticket);
+        _editContext.SetFieldCssClassProvider(new BootstrapCssClassProvider());
+        _image = null;
+    }
 
     private void LoadTrailImage(InputFileChangeEventArgs e)
     {

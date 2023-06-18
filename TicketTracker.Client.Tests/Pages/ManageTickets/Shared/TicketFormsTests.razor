@@ -1,0 +1,31 @@
+@using Microsoft.AspNetCore.Components.Forms;
+
+@inherits TestContext
+
+@code{
+    private readonly Fixture _fixture = new();
+
+    [Fact]
+    public void TicketFormComponent_ShouldDisplayFormSections()
+    {
+        // Arrange
+        var ticketDto = _fixture.Create<TicketDto>();
+        var editContext = new EditContext(ticketDto);
+        var cut = Render(@<TicketForm Ticket="ticketDto"></TicketForm>);
+
+        // Act
+        var ticketNumberFieldSet = cut.Find("[for='ticketNumber']").ParentElement;
+        var nitFieldSet = cut.Find("[for='nit']").ParentElement;
+        var descriptionFieldSet = cut.Find("[for='description']").ParentElement;
+        var amountFieldSet = cut.Find("[for='amount']").ParentElement;
+        var imageFieldSet = cut.Find("[for='image']").ParentElement;
+
+        // Assert
+        Assert.Contains("Details and amount", cut.Markup);
+        Assert.Contains("Ticket Number", ticketNumberFieldSet.InnerHtml);
+        Assert.Contains("Nit", nitFieldSet.InnerHtml);
+        Assert.Contains("Description", descriptionFieldSet.InnerHtml);
+        Assert.Contains("Amount", amountFieldSet.InnerHtml);
+        Assert.Contains("Image", imageFieldSet.InnerHtml);
+    }
+}

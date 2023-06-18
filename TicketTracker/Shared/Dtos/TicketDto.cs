@@ -20,6 +20,5 @@ public class TicketValidator : AbstractValidator<TicketDto>
         RuleFor(x => x.Nit).NotEmpty();
         RuleFor(x => x.Description).NotEmpty();
         RuleFor(x => x.Amount).NotEmpty().GreaterThan(0);
-        RuleFor(x => x.Image).NotEmpty();
     }
 }

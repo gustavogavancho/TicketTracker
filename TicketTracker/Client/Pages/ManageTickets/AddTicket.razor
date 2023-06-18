@@ -11,9 +11,13 @@
 
 <h3 class="mt-5 mb-4">Add a ticket</h3>
 
-<TicketForm >
-</TicketForm>
+<TicketForm @ref="_trailForm" OnSubmit="SubmitNewTicket" />
 
 @code {
+    private TicketForm _trailForm = default!;
 
+    private async Task SubmitNewTicket(TicketDto ticket, IBrowserFile? image)
+    {
+
+    }
 }

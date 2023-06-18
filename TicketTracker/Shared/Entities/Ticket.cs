@@ -22,6 +22,5 @@ public class TicketConfig : IEntityTypeConfiguration<Ticket>
         builder.Property(x => x.Nit).IsRequired();
         builder.Property(x => x.Description).IsRequired();
         builder.Property(x => x.Amount).IsRequired();
-        builder.Property(x => x.Image).IsRequired();
     }
 }

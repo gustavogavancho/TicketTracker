@@ -23,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketTracker.Repository.Te
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketTracker.Service.Tests", "TicketTracker.Services.Tests\TicketTracker.Service.Tests.csproj", "{333F4FA0-ED7F-4C06-AC9B-E248F497B365}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketTracker.Client.Tests", "TicketTracker.Client.Tests\TicketTracker.Client.Tests.csproj", "{33409993-4EFB-4A5B-9B48-F374B1E0EEB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TicketTracker.Client.Tests", "TicketTracker.Client.Tests\TicketTracker.Client.Tests.csproj", "{9BA0735B-B2AD-45B7-B3D0-4F0738537ADA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -59,10 +59,10 @@ Global
 		{333F4FA0-ED7F-4C06-AC9B-E248F497B365}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{333F4FA0-ED7F-4C06-AC9B-E248F497B365}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{333F4FA0-ED7F-4C06-AC9B-E248F497B365}.Release|Any CPU.Build.0 = Release|Any CPU
-		{33409993-4EFB-4A5B-9B48-F374B1E0EEB1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{33409993-4EFB-4A5B-9B48-F374B1E0EEB1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{33409993-4EFB-4A5B-9B48-F374B1E0EEB1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{33409993-4EFB-4A5B-9B48-F374B1E0EEB1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9BA0735B-B2AD-45B7-B3D0-4F0738537ADA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9BA0735B-B2AD-45B7-B3D0-4F0738537ADA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9BA0735B-B2AD-45B7-B3D0-4F0738537ADA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9BA0735B-B2AD-45B7-B3D0-4F0738537ADA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -75,7 +75,7 @@ Global
 		{D68A04C3-0103-4169-BF70-D4C2DA341C67} = {5E8FEF60-C7CC-495D-82D7-E78A38E77384}
 		{C21D5103-22E4-4057-936E-663B67E21953} = {D3ECBA73-EC66-4850-B0EF-793F79486339}
 		{333F4FA0-ED7F-4C06-AC9B-E248F497B365} = {D3ECBA73-EC66-4850-B0EF-793F79486339}
-		{33409993-4EFB-4A5B-9B48-F374B1E0EEB1} = {D3ECBA73-EC66-4850-B0EF-793F79486339}
+		{9BA0735B-B2AD-45B7-B3D0-4F0738537ADA} = {D3ECBA73-EC66-4850-B0EF-793F79486339}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {851CF387-1E3B-4D20-A9CE-B1AE3483D620}
