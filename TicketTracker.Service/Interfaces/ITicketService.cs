@@ -5,4 +5,5 @@ namespace TicketTracker.Service.Interfaces;
 public interface ITicketService
 {
     Task<TicketDto> CreateTicket(TicketDto ticketDto);
+    Task<TicketDto> GetTicket(int ticketId);
 }

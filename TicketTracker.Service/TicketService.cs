@@ -24,4 +24,9 @@ public class TicketService : ITicketService
 
         return _mapper.Map<TicketDto>(ticket);
     }
+
+    public Task<TicketDto> GetTicket(int ticketId)
+    {
+        throw new NotImplementedException();
+    }
 }
