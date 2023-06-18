@@ -32,8 +32,13 @@ public class TicketService : ITicketService
         return _mapper.Map<TicketDto>(result);
     }
 
-    public Task<TicketDto> UpdateTicket(TicketDto ticketDto)
+    public async Task<TicketDto> UpdateTicket(int ticketId, TicketDto ticketDto)
     {
-        throw new NotImplementedException();
+        var ticket = _mapper.Map<Ticket>(ticketDto);
+        ticket.Id = ticketId;
+
+        var result = await _repository.UpdateTicket(ticket);
+
+        return _mapper.Map<TicketDto>(result);
     }
 }

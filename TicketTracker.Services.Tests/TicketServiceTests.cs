@@ -64,11 +64,10 @@ public class TicketServiceTests
         _repository.Setup(x => x.UpdateTicket(It.IsAny<Ticket>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
 
         //Act
-        var sut = await _service.UpdateTicket(It.IsAny<TicketDto>());
+        var sut = await _service.UpdateTicket(1, ticketDto);
 
         //Assert
         Assert.NotNull(sut);
         Assert.IsType<TicketDto>(sut);
     }
-
 }
