@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using TicketTracker.Service.Interfaces;
+using TicketTracker.Shared.Dtos;
 
 namespace TicketTracker.Server.Controllers;
 
@@ -14,5 +15,11 @@ public class TicketController : ControllerBase
         _service = service;
     }
 
+    [HttpPost]
+    public async Task<IActionResult> CreateTicket(TicketDto ticket)
+    {
+        var result = await _service.CreateTicket(ticket);
 
+        return Ok(result);
+    }
 }

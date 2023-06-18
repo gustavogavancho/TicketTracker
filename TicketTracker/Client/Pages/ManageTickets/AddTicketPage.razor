@@ -1,0 +1,50 @@
+﻿@page "/add-ticket"
+
+@inject ITicketConsumer TicketConsumer
+
+<PageTitle>Add Ticket - TicketTracker</PageTitle>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Add Trail</li>
+    </ol>
+</nav>
+
+<h3 class="mt-5 mb-4">Add a ticket</h3>
+
+@if (_submitSuccessful)
+{
+    <SuccessAlert Message="Your trail has been added successfully!" />
+}
+else if (_errorMessage is not null)
+{
+    <ErrorAlert Message="@_errorMessage" />
+}
+
+<TicketForm @ref="_trailForm" OnSubmit="SubmitNewTicket" />
+
+@code {
+    private bool _submitSuccessful;
+    private string? _errorMessage;
+    private TicketForm _trailForm = default!;
+
+    private async Task SubmitNewTicket(TicketDto ticket, IBrowserFile? image)
+    {
+        var response = await TicketConsumer.CreateTicket(ticket);
+
+        if (response is null)
+        {
+            _submitSuccessful = false;
+            _errorMessage = "There was a problem saving your trail.";
+            StateHasChanged();
+            return;
+        }
+        else
+        {
+            _submitSuccessful = true;
+            _trailForm.ResetForm();
+        }
+        StateHasChanged();
+    }
+}
