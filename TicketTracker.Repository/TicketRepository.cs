@@ -29,4 +29,9 @@ public class TicketRepository : ITicketRepository
 
         return ticket;
     }
+
+    public Task<Ticket> UpdateTicket(Ticket ticket)
+    {
+        throw new NotImplementedException();
+    }
 }

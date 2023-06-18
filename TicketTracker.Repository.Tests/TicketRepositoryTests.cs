@@ -43,4 +43,18 @@ public class TicketRepositoryTests : IClassFixture<TicketTrackerContextClassFixt
         Assert.NotNull(sut);
         Assert.IsType<Ticket>(sut);
     }
+
+    [Fact]
+    public async Task TicketRepository_UpdateTicket_Successfully()
+    {
+        //Arrange
+        var ticket = _fixture.Create<Ticket>();
+
+        //Act
+        var sut = await _repository.UpdateTicket(ticket);
+
+        //Assert
+        Assert.NotNull(sut);
+        Assert.IsType<Ticket>(sut);
+    }
 }
