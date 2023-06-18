@@ -21,4 +21,9 @@ public class TicketRepository : ITicketRepository
 
         return ticket;
     }
+
+    public Task<Ticket> GetTicket(int ticketId)
+    {
+        throw new NotImplementedException();
+    }
 }
