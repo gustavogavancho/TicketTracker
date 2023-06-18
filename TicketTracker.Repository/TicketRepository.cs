@@ -30,8 +30,12 @@ public class TicketRepository : ITicketRepository
         return ticket;
     }
 
-    public Task<Ticket> UpdateTicket(Ticket ticket)
+    public async Task<Ticket> UpdateTicket(Ticket ticket)
     {
-        throw new NotImplementedException();
+        var result = _context.Ticket.Update(ticket);
+
+        await _context.SaveChangesAsync();
+
+        return result.Entity;
     }
 }

@@ -48,7 +48,8 @@ public class TicketRepositoryTests : IClassFixture<TicketTrackerContextClassFixt
     public async Task TicketRepository_UpdateTicket_Successfully()
     {
         //Arrange
-        var ticket = _fixture.Create<Ticket>();
+        var ticket = await _repository.GetTicket(1);
+        ticket.TicketNumber = "Test 1";
 
         //Act
         var sut = await _repository.UpdateTicket(ticket);
@@ -56,5 +57,6 @@ public class TicketRepositoryTests : IClassFixture<TicketTrackerContextClassFixt
         //Assert
         Assert.NotNull(sut);
         Assert.IsType<Ticket>(sut);
+        Assert.Equal(ticket.TicketNumber, sut.TicketNumber);
     }
 }
