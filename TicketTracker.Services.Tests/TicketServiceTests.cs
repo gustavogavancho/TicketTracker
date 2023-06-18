@@ -54,4 +54,21 @@ public class TicketServiceTests
         Assert.NotNull(sut);
         Assert.IsType<TicketDto>(sut);
     }
+
+    [Fact]
+    public async Task TicketServiceTests_UpdateTicket_Successfully()
+    {
+        //Arrange
+        var ticketDto = _fixture.Create<TicketDto>();
+
+        _repository.Setup(x => x.UpdateTicket(It.IsAny<Ticket>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
+
+        //Act
+        var sut = await _service.UpdateTicket(It.IsAny<TicketDto>());
+
+        //Assert
+        Assert.NotNull(sut);
+        Assert.IsType<TicketDto>(sut);
+    }
+
 }
