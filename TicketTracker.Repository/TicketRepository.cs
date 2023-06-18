@@ -1,4 +1,5 @@
-﻿using TicketTracker.Repository.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using TicketTracker.Repository.Data;
 using TicketTracker.Repository.Interfaces;
 using TicketTracker.Shared.Entities;
 
@@ -22,8 +23,10 @@ public class TicketRepository : ITicketRepository
         return ticket;
     }
 
-    public Task<Ticket> GetTicket(int ticketId)
+    public async Task<Ticket> GetTicket(int ticketId)
     {
-        throw new NotImplementedException();
+        var ticket = await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId);
+
+        return ticket;
     }
 }

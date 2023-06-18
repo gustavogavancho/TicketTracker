@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using TicketTracker.Repository.Data;
+using TicketTracker.Shared.Entities;
 
 namespace TicketTracker.Repository.Tests.ClassFixture;
 
@@ -14,5 +15,21 @@ public class TicketTrackerContextClassFixture
             .Options;
 
         Context = new TicketTrackerContext(options);
+
+        SeedTicket();
+    }
+
+    private void SeedTicket()
+    {
+        Context.Ticket.Add(new Ticket
+        {
+            Id = 1,
+            TicketNumber = "123456789",
+            Description = "Test",
+            Nit = 123456789,
+            Amount = 200.33m
+        });
+
+        Context.SaveChanges();
     }
 }
