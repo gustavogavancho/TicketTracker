@@ -1,13 +1,25 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FluentValidation;
 
 namespace TicketTracker.Shared.Dtos;
 
 public class TicketDto
 {
-    [Required] public string TicketNumber { get; set; } = default!;
-    [Required] public long? Nit { get; set; }
-    [Required] public string Description { get; set; } = default!;
-    [Required] public decimal? Amount { get; set; }
+    public string TicketNumber { get; set; } = default!;
+    public long? Nit { get; set; }
+    public string Description { get; set; } = default!;
+    public decimal? Amount { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.Now;
-    [Required] public byte[] TicketAttached { get; set; } = default!;
+    public string? Image { get; set; } = default!;
+}
+
+public class TicketValidator : AbstractValidator<TicketDto>
+{
+    public TicketValidator()
+    {
+        RuleFor(x => x.TicketNumber).NotEmpty();
+        RuleFor(x => x.Nit).NotEmpty();
+        RuleFor(x => x.Description).NotEmpty();
+        RuleFor(x => x.Amount).NotEmpty().GreaterThan(0);
+        RuleFor(x => x.Image).NotEmpty();
+    }
 }

@@ -9,7 +9,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketTracker.Client", "Tic
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TicketTracker.Shared", "TicketTracker\Shared\TicketTracker.Shared.csproj", "{89BE2FD3-7D99-4669-BCA3-592377C678E9}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base Layer", "Base Layer", "{5E8FEF60-C7CC-495D-82D7-E78A38E77384}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Base Layers", "Base Layers", "{5E8FEF60-C7CC-495D-82D7-E78A38E77384}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Upper Layer", "Upper Layer", "{11B56F35-0F3A-4FF5-B9C2-4BCC6F297263}"
 EndProject

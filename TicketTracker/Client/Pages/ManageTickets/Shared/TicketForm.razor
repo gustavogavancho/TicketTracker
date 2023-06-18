@@ -1,33 +1,51 @@
-﻿<EditForm Model="_ticket">
+﻿<EditForm Model="_ticket" OnValidSubmit="SubmitForm">
     <FluentValidationValidator />
     <ValidationSummary />
 
     <FormSection Title="Details and amount"
                  HelpText="A ticket is a commercial document that provides a detailed summary of a transaction between a seller and a buyer. It serves as a request for payment or as evidence of a financial transaction.">
 
-        <FormFieldSet Width="col-6">
+        <FormFieldSet Width="col-11">
             <label for="ticketNumber" class="form-label text-muted"><b>Ticket Number</b></label>
             <InputText @bind-Value="_ticket.TicketNumber" class="form-control" id="ticketNumber" />
             <ValidationMessage For="@(() => _ticket.TicketNumber)" />
         </FormFieldSet>
 
-        <FormFieldSet Width="col-6">
+        <FormFieldSet Width="col-11">
             <label for="nit" class="form-label text-muted"><b>Nit</b></label>
             <InputNumber @bind-Value="_ticket.Nit" class="form-control" id="nit" />
             <ValidationMessage For="@(() => _ticket.Nit)" />
         </FormFieldSet>
 
-        <FormFieldSet>
+        <FormFieldSet Width="col-11">
             <label for="description" class="form-label text-muted"><b>Description</b></label>
             <InputText @bind-Value="_ticket.Description" class="form-control" id="description" />
             <ValidationMessage For="@(() => _ticket.Description)" />
         </FormFieldSet>
 
-        <FormFieldSet Width="col-6">
+        <FormFieldSet Width="col-11">
             <label for="amount" class="form-label text-muted"><b>Amount</b></label>
             <InputNumber @bind-Value="_ticket.Amount" class="form-control" id="amount" />
             <ValidationMessage For="@(() => _ticket.Amount)" />
         </FormFieldSet>
+
+        <FormFieldSet Width="col-11">
+            <label for="image" class="form-label text-muted"><b>Image</b></label>
+            @if (string.IsNullOrWhiteSpace(_ticket.Image))
+            {
+                <InputFile OnChange="LoadTrailImage" class="form-control" id="image" accept=".png,.jpg,.jpeg" />
+            }
+            else
+            {
+                <div class="card bg-dark text-white">
+                    <img src="images/@_ticket.Image" />
+                    <div class="card-img-overlay">
+                        <button class="btn btn-primary btn-sm" @onclick="RemoveTrailImage">Remove</button>
+                    </div>
+                </div>
+            }
+        </FormFieldSet>
+
     </FormSection>
 
     <div class="mt-4 mb-5">
@@ -43,4 +61,19 @@
 
 @code {
     private TicketDto _ticket = new TicketDto();
+
+    private void LoadTrailImage(InputFileChangeEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    private void RemoveTrailImage()
+    {
+        throw new NotImplementedException();        
+    }
+
+    private async Task SubmitForm()
+    {
+        throw new NotImplementedException();
+    }
 }
