@@ -21,9 +21,5 @@
     <ProjectReference Include="..\Client\TicketTracker.Client.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Images\" />
-  </ItemGroup>
-
 
 </Project>

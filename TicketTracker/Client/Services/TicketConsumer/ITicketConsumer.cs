@@ -6,5 +6,4 @@ namespace TicketTracker.Client.Services.TicketConsumer;
 public interface ITicketConsumer
 {
     Task<TicketDto> CreateTicket(TicketDto ticket);
-    Task<string> UploadImage(int ticketId, IBrowserFile ticketImage);
 }

@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Newtonsoft.Json;
+﻿using Newtonsoft.Json;
 using System.Text;
 using TicketTracker.Shared.Dtos;
 
@@ -28,19 +27,5 @@ public class TicketConsumer : ITicketConsumer
             return JsonConvert.DeserializeObject<TicketDto>(responseResult);
 
         return null;
-    }
-
-    public async Task<string> UploadImage(int ticketId, IBrowserFile ticketImage)
-    {
-        var fileContent = ticketImage.OpenReadStream(ticketImage.Size);
-
-        using var content = new MultipartFormDataContent();
-        content.Add(new StreamContent(fileContent), "image", ticketImage.Name);
-
-        var response = await _httpClient.PostAsync($"api/ticket/{ticketId}/image", content);
-
-        string responseResult = await response.Content.ReadAsStringAsync();
-
-        return responseResult;
     }
 }

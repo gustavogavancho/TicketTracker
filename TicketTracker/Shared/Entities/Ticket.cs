@@ -11,7 +11,7 @@ public class Ticket
     public string Description { get; set; } = default!;
     public decimal? Amount { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.Now;
-    public string? Image { get; set; } = default!;
+    public byte[]? Image { get; set; } = default!;
 }
 
 public class TicketConfig : IEntityTypeConfiguration<Ticket>

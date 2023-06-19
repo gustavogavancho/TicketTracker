@@ -1,0 +1,23 @@
+﻿@using System.Text
+
+<img src="@ImageDataUrl" alt="Image" class="image-display" style="width: 640px; height: 426px" />
+
+@code {
+    [Parameter]
+    public byte[] ImageData { get; set; } = default!;
+
+    public string ImageDataUrl { get; private set; } = default!;
+
+    protected override void OnParametersSet()
+    {
+        if (ImageData != null)
+        {
+            var base64 = Convert.ToBase64String(ImageData);
+            ImageDataUrl = $"data:image/png;base64,{base64}";
+        }
+        else
+        {
+            ImageDataUrl = string.Empty;
+        }
+    }
+}

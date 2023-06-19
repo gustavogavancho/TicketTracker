@@ -1,5 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using TicketTracker.Shared.Dtos;
+﻿using TicketTracker.Shared.Dtos;
 
 namespace TicketTracker.Service.Interfaces;
 

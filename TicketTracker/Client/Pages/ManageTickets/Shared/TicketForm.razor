@@ -31,14 +31,14 @@
 
         <FormFieldSet Width="col-11">
             <label for="image" class="form-label text-muted"><b>Image</b></label>
-            @if (string.IsNullOrWhiteSpace(_ticket.Image))
+            @if (_ticket.Image is null)
             {
                 <InputFile OnChange="LoadTrailImage" class="form-control" id="image" accept=".png,.jpg,.jpeg" />
             }
             else
             {
                 <div class="card bg-dark text-white">
-                    <img src="images/@_ticket.Image" />
+                    <ImageDisplay ImageData="_ticket.Image" />
                     <div class="card-img-overlay">
                         <button id="resetButton" class="btn btn-primary btn-sm" @onclick="RemoveTrailImage">Remove</button>
                     </div>
@@ -81,16 +81,18 @@
         _image = null;
     }
 
-    private void LoadTrailImage(InputFileChangeEventArgs e)
+    private async Task LoadTrailImage(InputFileChangeEventArgs e)
     {
+        var file = e.File;
+        var buffer = new byte[file.Size];
+        await file.OpenReadStream().ReadAsync(buffer);
+        _ticket.Image = buffer;
         _image = e.File;
-        _ticket.ImageAction = ImageAction.Add;
     }
 
     private void RemoveTrailImage()
     {
         _ticket.Image = null;
-        _ticket.ImageAction = ImageAction.Remove;
     }
 
     private async Task SubmitForm() => await OnSubmit(_ticket, _image);
