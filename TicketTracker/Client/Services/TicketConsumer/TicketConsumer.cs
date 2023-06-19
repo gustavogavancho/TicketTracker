@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Components.Forms;
+using Newtonsoft.Json;
 using System.Text;
 using TicketTracker.Shared.Dtos;
 
@@ -15,8 +16,6 @@ public class TicketConsumer : ITicketConsumer
 
     public async Task<TicketDto> CreateTicket(TicketDto ticket)
     {
-        TicketDto result = null;
-
         var content = JsonConvert.SerializeObject(ticket);
 
         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
@@ -26,8 +25,22 @@ public class TicketConsumer : ITicketConsumer
         string responseResult = await response.Content.ReadAsStringAsync();
 
         if (response.IsSuccessStatusCode)
-            result = JsonConvert.DeserializeObject<TicketDto>(responseResult);
+            return JsonConvert.DeserializeObject<TicketDto>(responseResult);
 
-        return result;
+        return null;
+    }
+
+    public async Task<string> UploadImage(int ticketId, IBrowserFile ticketImage)
+    {
+        var fileContent = ticketImage.OpenReadStream(ticketImage.Size);
+
+        using var content = new MultipartFormDataContent();
+        content.Add(new StreamContent(fileContent), "image", ticketImage.Name);
+
+        var response = await _httpClient.PostAsync($"api/ticket/{ticketId}/image", content);
+
+        string responseResult = await response.Content.ReadAsStringAsync();
+
+        return responseResult;
     }
 }

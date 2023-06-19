@@ -23,9 +23,10 @@ public class TicketRepository : ITicketRepository
         return ticket;
     }
 
-    public async Task<Ticket> GetTicket(int ticketId)
+    public async Task<Ticket> GetTicket(int ticketId, bool trackChanged)
     {
-        var ticket = await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId);
+        var ticket = trackChanged ? await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId)
+            : await _context.Ticket.AsNoTracking().FirstOrDefaultAsync(x => x.Id == ticketId);
 
         return ticket;
     }

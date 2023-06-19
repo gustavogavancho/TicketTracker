@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Http;
 using TicketTracker.Repository.Interfaces;
 using TicketTracker.Service.Interfaces;
 using TicketTracker.Shared.Dtos;
 using TicketTracker.Shared.Entities;
+using TicketTracker.Shared.Exceptions;
+using Image = SixLabors.ImageSharp.Image;
 
 namespace TicketTracker.Service;
 
@@ -25,9 +28,9 @@ public class TicketService : ITicketService
         return _mapper.Map<TicketDto>(result);
     }
 
-    public async Task<TicketDto> GetTicket(int ticketId)
+    public async Task<TicketDto> GetTicket(int ticketId, bool trackChanged)
     {
-        var result = await _repository.GetTicket(ticketId);
+        var result = await _repository.GetTicket(ticketId, trackChanged);
 
         return _mapper.Map<TicketDto>(result);
     }

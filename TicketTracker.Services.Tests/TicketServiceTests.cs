@@ -45,10 +45,10 @@ public class TicketServiceTests
         //Arrange
         var ticketDto = _fixture.Create<TicketDto>();
 
-        _repository.Setup(x => x.GetTicket(It.IsAny<int>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
+        _repository.Setup(x => x.GetTicket(It.IsAny<int>(), It.IsAny<bool>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
 
         //Act
-        var sut = await _service.GetTicket(It.IsAny<int>());
+        var sut = await _service.GetTicket(It.IsAny<int>(), It.IsAny<bool>());
 
         //Assert
         Assert.NotNull(sut);
