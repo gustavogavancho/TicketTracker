@@ -23,6 +23,13 @@ public class TicketRepository : ITicketRepository
         return ticket;
     }
 
+    public async Task<List<Ticket>> GetAllTickets()
+    {
+        var tickets = await _context.Ticket.ToListAsync();
+
+        return tickets;
+    }
+
     public async Task<Ticket> GetTicket(int ticketId, bool trackChanged)
     {
         var ticket = trackChanged ? await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId)

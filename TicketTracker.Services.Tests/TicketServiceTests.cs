@@ -70,4 +70,20 @@ public class TicketServiceTests
         Assert.NotNull(sut);
         Assert.IsType<TicketDto>(sut);
     }
+
+    [Fact]
+    public async Task TicketServiceTests_GetAllTickets_Successfully()
+    {
+        //Arrange
+        var tickets = _fixture.Create<List<Ticket>>();
+
+        _repository.Setup(x => x.GetAllTickets()).ReturnsAsync(tickets);
+
+        //Act
+        var sut = await _service.GetAllTickets();
+
+        //Assert
+        Assert.NotNull(sut);
+        Assert.IsType<List<TicketDto>>(sut);
+    }
 }

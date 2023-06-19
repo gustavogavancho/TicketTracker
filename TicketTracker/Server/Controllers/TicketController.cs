@@ -15,6 +15,14 @@ public class TicketController : ControllerBase
         _service = service;
     }
 
+    [HttpGet]
+    public async Task<IActionResult> GetTickets()
+    {
+        var result = await _service.GetAllTickets();
+
+        return Ok(result);
+    }
+
     [HttpGet("{id:int}", Name = "GetById")]
     public async Task<IActionResult> GetTicket(int id)
     {

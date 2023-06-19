@@ -25,6 +25,13 @@ public class TicketService : ITicketService
         return _mapper.Map<TicketDto>(result);
     }
 
+    public async Task<List<TicketDto>> GetAllTickets()
+    {
+        var result = _mapper.Map<List<TicketDto>>(await _repository.GetAllTickets());
+
+        return result;
+    }
+
     public async Task<TicketDto> GetTicket(int ticketId, bool trackChanges)
     {
         var result = await _repository.GetTicket(ticketId, trackChanges);

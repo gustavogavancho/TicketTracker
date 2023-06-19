@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using TicketTracker.Shared.Dtos;
+﻿using TicketTracker.Shared.Dtos;
 
 namespace TicketTracker.Client.Services.TicketConsumer;
 
 public interface ITicketConsumer
 {
     Task<TicketDto> CreateTicket(TicketDto ticket);
+    Task<List<TicketDto>> GetAllTickets();
 }
