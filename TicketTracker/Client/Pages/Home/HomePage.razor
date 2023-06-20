@@ -7,10 +7,11 @@
 
 @if (_tickets == null)
 {
-    <p>Loading Trails...</p>
+    <p>Loading Tickets...</p>
 }
 else
 {
+    <TicketDetails Ticket="_selectedTicket" />
     <TicketSearch />
 
     @if (_tickets.Any())
@@ -22,10 +23,11 @@ else
 
         <ViewSwitcher Items="_tickets" Context="ticket">
             <GridTemplate>
-                <TicketCard Ticket="ticket" OnSelected="HandleTrailSelected" />
+                <TicketCard Ticket="ticket" OnSelected="HandleTicketSelected" />
             </GridTemplate>
             <HeaderTemplate>
                 <th>Ticket Number</th>
+                <th>Nit</th>
                 <th>Description </th>
                 <th>Date Created</th>
                 <th>Amount</th>
@@ -33,14 +35,15 @@ else
             </HeaderTemplate>
             <RowTemplate>
                 <th scope="col">@ticket.TicketNumber</th>
+                <td>@ticket.Nit</td>
                 <td>@ticket.Description</td>
                 <td>@ticket.DateCreated</td>
                 <td>@ticket.Amount</td>
                 <td class="text-end">
-                    <button @onclick="@(() => NavManager.NavigateTo($"/edit-trail/{ticket.Id}"))" title="Edit" class="btn btn-outline-secondary">
+                    <button @onclick="@(() => NavManager.NavigateTo($"/edit-ticket/{ticket.Id}"))" title="Edit" class="btn btn-outline-secondary">
                         <i class="bi bi-pencil"></i>
                     </button>
-                    <button @onclick="() => HandleTrailSelected(ticket)" title="View" class="btn btn-primary">
+                    <button @onclick="() => HandleTicketSelected(ticket)" title="View" class="btn btn-primary">
                         <i class="bi bi-binoculars"></i>
                     </button>
                 </td>
@@ -49,12 +52,12 @@ else
     }
     else
     {
-        <div class="no-trails">
+        <div class="no-tickets">
             <svg viewBox="0 0 16 16" class="bi bi-tree" fill="currentColor" xmlns="http://www.w3.org/2000/svg">
                 <path fill-rule="evenodd" d="M8 0a.5.5 0 0 1 .416.223l3 4.5A.5.5 0 0 1 11 5.5h-.098l2.022 3.235a.5.5 0 0 1-.424.765h-.191l1.638 3.276a.5.5 0 0 1-.447.724h-11a.5.5 0 0 1-.447-.724L3.69 9.5H3.5a.5.5 0 0 1-.424-.765L5.098 5.5H5a.5.5 0 0 1-.416-.777l3-4.5A.5.5 0 0 1 8 0zM5.934 4.5H6a.5.5 0 0 1 .424.765L4.402 8.5H4.5a.5.5 0 0 1 .447.724L3.31 12.5h9.382l-1.638-3.276A.5.5 0 0 1 11.5 8.5h.098L9.576 5.265A.5.5 0 0 1 10 4.5h.066L8 1.401 5.934 4.5z" />
                 <path d="M7 13.5h2V16H7v-2.5z" />
             </svg>
-            <h3 class="text-muted font-weight-light">We currently don't have any trails, <a href="add-trail">why not add one?</a></h3>
+            <h3 class="text-muted font-weight-light">We currently don't have any tickets, <a href="add-ticket">why not add one?</a></h3>
         </div>
     }
 }
@@ -69,5 +72,5 @@ else
         _tickets = response;
     }
 
-    private void HandleTrailSelected(TicketDto ticketDto) => _selectedTicket = ticketDto;
+    private void HandleTicketSelected(TicketDto ticketDto) => _selectedTicket = ticketDto;
 }

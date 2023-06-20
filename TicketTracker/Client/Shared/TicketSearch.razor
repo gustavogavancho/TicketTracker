@@ -4,7 +4,7 @@
     <h1 class="display-4 text-center">Welcome to Ticket Tracker</h1>
     <p class="lead text-center">Collect all your tickets that are tax deductible in one single place!</p>
     <p class="mt-4">
-        <input @onkeydown="SearchForTrail"
+        <input @onkeydown="SearchForTicket"
                @bind="_searchTerm"
                @bind:event="oninput"
                @ref=myInput
@@ -26,7 +26,7 @@
         }
     }
 
-    private void SearchForTrail(KeyboardEventArgs args)
+    private void SearchForTicket(KeyboardEventArgs args)
     {
     }
 }

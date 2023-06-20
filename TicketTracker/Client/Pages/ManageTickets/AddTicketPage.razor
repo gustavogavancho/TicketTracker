@@ -7,7 +7,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Add Trail</li>
+        <li class="breadcrumb-item active" aria-current="page">Add Ticket</li>
     </ol>
 </nav>
 
@@ -22,12 +22,12 @@ else if (_errorMessage is not null)
     <ErrorAlert Message="@_errorMessage" />
 }
 
-<TicketForm @ref="_trailForm" OnSubmit="SubmitNewTicket" />
+<TicketForm @ref="_ticketForm" OnSubmit="SubmitNewTicket" />
 
 @code {
     private bool _submitSuccessful;
     private string? _errorMessage;
-    private TicketForm _trailForm = default!;
+    private TicketForm _ticketForm = default!;
 
     private async Task SubmitNewTicket(TicketDto ticket, IBrowserFile? image)
     {
@@ -41,7 +41,7 @@ else if (_errorMessage is not null)
             return;
         }
         _submitSuccessful = true;
-        _trailForm.ResetForm();
+        _ticketForm.ResetForm();
 
         StateHasChanged();
     }

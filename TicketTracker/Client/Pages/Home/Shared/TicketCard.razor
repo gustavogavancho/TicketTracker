@@ -1,21 +1,21 @@
 ﻿@inject NavigationManager NavManager
 
 <div class="card shadow" style="width: 18rem;">
-    <img src="https://via.placeholder.com/286x190.jpg?text=No+Image+For+Trail" class="card-img-top">
+    <img src="https://via.placeholder.com/286x190.jpg?text=No+Image+For+Ticket" class="card-img-top">
     <div class="card-body">
-        <h5 class="card-title">@Ticket.TicketNumber</h5>
+        <h5 class="card-title">@Ticket.Description</h5>
         <h6 class="card-subtitle mb-3 text-muted">
-            <span class="oi oi-map-marker"></span>
-            @Ticket.DateCreated
+            <span class="bi bi-receipt" title="Ticket Number"></span>
+            @Ticket.TicketNumber
         </h6>
         <div class="d-flex justify-content-between mb-3">
-            <span><span class="oi oi-clock mr-2"></span> @Ticket.Amount</span>
-            <span><span class="oi oi-infinity mr-2"></span> @Ticket.Nit</span>
+            <span><span class="bi bi-coin mr-2" title="Amount"></span> @Ticket.Amount</span>
+            <span><span class="bi bi-calendar-plus mr-2" title="Date"></span> @Ticket.DateCreated.ToShortDateString()</span>
         </div>
         <button class="btn btn-primary" title="View" @onclick="@(async () => await OnSelected.InvokeAsync(Ticket))">
             <i class="bi bi-binoculars"></i>
         </button>
-        <button class="btn btn-outline-secondary float-end" title="Edit" @onclick="@(() => NavManager.NavigateTo($"/edit-trail/{Ticket.Id}"))">
+        <button class="btn btn-outline-secondary float-end" title="Edit" @onclick="@(() => NavManager.NavigateTo($"/edit-ticket/{Ticket.Id}"))">
             <i class="bi bi-pencil"></i>
         </button>
 

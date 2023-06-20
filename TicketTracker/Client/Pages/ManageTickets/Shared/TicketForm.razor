@@ -7,7 +7,7 @@
 
         <FormFieldSet Width="col-11">
             <label for="ticketNumber" class="form-label text-muted"><b>Ticket Number</b></label>
-            <InputText @bind-Value="_ticket.TicketNumber" class="form-control" id="ticketNumber" />
+            <InputText @bind-Value="_ticket.TicketNumber" class="form-control" id="ticketNumber" style="text-transform:uppercase" />
             <ValidationMessage For="@(() => _ticket.TicketNumber)" />
         </FormFieldSet>
 
@@ -19,7 +19,7 @@
 
         <FormFieldSet Width="col-11">
             <label for="description" class="form-label text-muted"><b>Description</b></label>
-            <InputText @bind-Value="_ticket.Description" class="form-control" id="description" />
+            <InputText @bind-Value="_ticket.Description" class="form-control" id="description" style="text-transform:uppercase" />
             <ValidationMessage For="@(() => _ticket.Description)" />
         </FormFieldSet>
 
@@ -33,14 +33,14 @@
             <label for="image" class="form-label text-muted"><b>Image</b></label>
             @if (_ticket.Image is null)
             {
-                <InputFile OnChange="LoadTrailImage" class="form-control" id="image" accept=".png,.jpg,.jpeg" />
+                <InputFile OnChange="LoadTicketImage" class="form-control" id="image" accept=".png,.jpg,.jpeg" />
             }
             else
             {
                 <div class="card bg-dark text-white">
                     <ImageDisplay ImageData="_ticket.Image" />
                     <div class="card-img-overlay">
-                        <button id="resetButton" class="btn btn-primary btn-sm" @onclick="RemoveTrailImage">Remove</button>
+                        <button id="resetButton" class="btn btn-primary btn-sm" @onclick="RemoveTicketImage">Remove</button>
                     </div>
                 </div>
             }
@@ -81,7 +81,7 @@
         _image = null;
     }
 
-    private async Task LoadTrailImage(InputFileChangeEventArgs e)
+    private async Task LoadTicketImage(InputFileChangeEventArgs e)
     {
         var file = e.File;
         var buffer = new byte[file.Size];
@@ -90,7 +90,7 @@
         _image = e.File;
     }
 
-    private void RemoveTrailImage()
+    private void RemoveTicketImage()
     {
         _ticket.Image = null;
     }
