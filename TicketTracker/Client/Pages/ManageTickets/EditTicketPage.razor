@@ -1,5 +1,69 @@
-﻿<h3>EditTicketPage</h3>
+﻿@page "/edit-ticket/{TicketId:int}"
+
+@inject ITicketConsumer TicketConsumer
+
+<PageTitle>Edit Ticket - Ticket Tracker</PageTitle>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Ticket</li>
+    </ol>
+</nav>
+
+@if (_isLoading)
+{
+    <p>Loading ticket...</p>
+}
+else
+{
+    <h3 class="mt-5 mb-4">Editing ticket: @_ticket.TicketNumber</h3>
+
+    @if (_submitSuccessful)
+    {
+        <SuccessAlert Message="Your trail has been edited successfully!" />
+    }
+    else if (_errorMessage is not null)
+    {
+        <ErrorAlert Message="@_errorMessage" />
+    }
+
+    <TicketForm Ticket="_ticket" OnSubmit="SubmitEditTicket" />
+}
 
 @code {
+    private bool _isLoading;
+    private bool _submitSuccessful;
+    private string? _errorMessage;
+    private TicketDto _ticket = new TicketDto();
 
+    [Parameter] public int TicketId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        _isLoading = true;
+
+        var response = await TicketConsumer.GetTicket(TicketId);
+
+        if (response is not null)
+        {
+            _ticket.Id = TicketId;
+            _ticket.TicketNumber = response.TicketNumber;
+            _ticket.Nit = response.Nit;
+            _ticket.Description = response.Description;
+            _ticket.Amount = response.Amount;
+            _ticket.Image = response.Image;
+        }
+        else
+        {
+            _errorMessage = "There was a problem loading the trail.";
+        }
+
+        _isLoading = false;
+    }
+
+    private async Task SubmitEditTicket(TicketDto ticket, IBrowserFile? image)
+    {
+        
+    }
 }

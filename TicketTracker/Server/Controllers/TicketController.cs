@@ -26,7 +26,7 @@ public class TicketController : ControllerBase
     [HttpGet("{id:int}", Name = "GetById")]
     public async Task<IActionResult> GetTicket(int id)
     {
-        var result = await _service.GetTicket(id, false);
+        var result = await _service.GetTicket(id);
 
         return Ok(result);
     }

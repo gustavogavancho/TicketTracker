@@ -1,7 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System.Text;
 using TicketTracker.Shared.Dtos;
-using TicketTracker.Shared.Entities;
 
 namespace TicketTracker.Client.Services.TicketConsumer;
 
@@ -27,7 +26,6 @@ public class TicketConsumer : ITicketConsumer
         if (response.IsSuccessStatusCode)
             return JsonConvert.DeserializeObject<TicketDto>(responseResult);
 
-        // Handle error
         throw new Exception($"Failed to retrieve insert ticket. Status code: {response.StatusCode}");
     }
 
@@ -41,7 +39,19 @@ public class TicketConsumer : ITicketConsumer
             return JsonConvert.DeserializeObject<List<TicketDto>>(content);
         }
 
-        // Handle error
+        throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
+    }
+
+    public async Task<TicketDto> GetTicket(int ticketId)
+    {
+        var response = await _httpClient.GetAsync($"api/ticket/{ticketId}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<TicketDto>(content);
+        }
+
         throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
     }
 }

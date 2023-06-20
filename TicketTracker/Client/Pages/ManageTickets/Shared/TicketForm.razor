@@ -71,6 +71,16 @@
     {
         _editContext = new EditContext(_ticket);
         _editContext.SetFieldCssClassProvider(new BootstrapCssClassProvider());
+
+        if (Ticket != null)
+        {
+            _ticket.Id = Ticket.Id;
+            _ticket.TicketNumber = Ticket.TicketNumber;
+            _ticket.Nit = Ticket.Nit;
+            _ticket.Description = Ticket.Description;
+            _ticket.Amount = Ticket.Amount;
+            _ticket.Image = Ticket.Image;
+        }
     }
 
     public void ResetForm()

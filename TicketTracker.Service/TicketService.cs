@@ -32,9 +32,9 @@ public class TicketService : ITicketService
         return result;
     }
 
-    public async Task<TicketDto> GetTicket(int ticketId, bool trackChanges)
+    public async Task<TicketDto> GetTicket(int ticketId)
     {
-        var result = await _repository.GetTicket(ticketId, trackChanges);
+        var result = await _repository.GetTicket(ticketId);
 
         return _mapper.Map<TicketDto>(result);
     }

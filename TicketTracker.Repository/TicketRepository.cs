@@ -30,10 +30,9 @@ public class TicketRepository : ITicketRepository
         return tickets;
     }
 
-    public async Task<Ticket> GetTicket(int ticketId, bool trackChanged)
+    public async Task<Ticket> GetTicket(int ticketId)
     {
-        var ticket = trackChanged ? await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId)
-            : await _context.Ticket.AsNoTracking().FirstOrDefaultAsync(x => x.Id == ticketId);
+        var ticket = await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId);
 
         return ticket;
     }
