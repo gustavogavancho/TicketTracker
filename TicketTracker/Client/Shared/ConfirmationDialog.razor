@@ -1,0 +1,36 @@
+﻿@inherits ComponentBase
+
+<div class="modal-overlay">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">Confirmation</h4>
+            </div>
+            <div class="modal-body">
+                <p>@Message</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-primary" @onclick="Confirm">Yes</button>
+                <button type="button" class="btn btn-primary" @onclick="Cancel">No</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@code {
+    [Parameter, EditorRequired]
+    public string Message { get; set; } = default!;
+
+    [Parameter, EditorRequired]
+    public EventCallback<bool> OnConfirmation { get; set; }
+
+    private async Task Confirm()
+    {
+        await OnConfirmation.InvokeAsync(true);
+    }
+
+    private async Task Cancel()
+    {
+        await OnConfirmation.InvokeAsync(false);
+    }
+}

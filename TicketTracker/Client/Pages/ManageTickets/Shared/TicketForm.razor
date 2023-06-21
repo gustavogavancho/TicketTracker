@@ -7,7 +7,7 @@
 
         <FormFieldSet Width="col-11">
             <label for="ticketNumber" class="form-label text-muted"><b>Ticket Number</b></label>
-            <InputText @bind-Value="_ticket.TicketNumber" class="form-control" id="ticketNumber" style="text-transform:uppercase" />
+            <InputText @bind-Value="_ticket.TicketNumber" class="form-control" id="ticketNumber" oninput="this.value=this.value.toUpperCase()" />
             <ValidationMessage For="@(() => _ticket.TicketNumber)" />
         </FormFieldSet>
 
@@ -19,7 +19,7 @@
 
         <FormFieldSet Width="col-11">
             <label for="description" class="form-label text-muted"><b>Description</b></label>
-            <InputText @bind-Value="_ticket.Description" class="form-control" id="description" style="text-transform:uppercase" />
+            <InputText @bind-Value="_ticket.Description" class="form-control" id="description" oninput="this.value=this.value.toUpperCase()" />
             <ValidationMessage For="@(() => _ticket.Description)" />
         </FormFieldSet>
 
