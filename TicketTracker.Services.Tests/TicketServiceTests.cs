@@ -45,10 +45,10 @@ public class TicketServiceTests
         //Arrange
         var ticketDto = _fixture.Create<TicketDto>();
 
-        _repository.Setup(x => x.GetTicket(It.IsAny<int>(), It.IsAny<bool>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
+        _repository.Setup(x => x.GetTicket(It.IsAny<int>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
 
         //Act
-        var sut = await _service.GetTicket(It.IsAny<int>(), It.IsAny<bool>());
+        var sut = await _service.GetTicket(It.IsAny<int>());
 
         //Assert
         Assert.NotNull(sut);
@@ -64,7 +64,7 @@ public class TicketServiceTests
         _repository.Setup(x => x.UpdateTicket(It.IsAny<Ticket>())).ReturnsAsync(_mapper.Map<Ticket>(ticketDto));
 
         //Act
-        var sut = await _service.UpdateTicket(1, ticketDto);
+        var sut = await _service.UpdateTicket(ticketDto);
 
         //Assert
         Assert.NotNull(sut);
@@ -85,5 +85,20 @@ public class TicketServiceTests
         //Assert
         Assert.NotNull(sut);
         Assert.IsType<List<TicketDto>>(sut);
+    }
+
+    [Fact]
+    public async Task TicketServiceTests_DeleteTicket_Successfully()
+    {
+        //Arrange
+
+        _repository.Setup(x => x.DeleteTicket(It.IsAny<int>())).ReturnsAsync(true);
+
+        //Act
+        var sut = await _service.DeleteTicket(It.IsAny<int>());
+
+        //Assert
+        Assert.IsType<bool>(sut);
+        Assert.True(sut);
     }
 }

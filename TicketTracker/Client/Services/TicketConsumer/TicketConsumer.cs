@@ -29,6 +29,19 @@ public class TicketConsumer : ITicketConsumer
         throw new Exception($"Failed to retrieve insert ticket. Status code: {response.StatusCode}");
     }
 
+    public async Task<bool> DeleteTicket(int ticketId)
+    {
+        var response = await _httpClient.DeleteAsync($"api/ticket/{ticketId}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<bool>(content);
+        }
+
+        throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
+    }
+
     public async Task<List<TicketDto>> GetAllTickets()
     {
         var response = await _httpClient.GetAsync("api/ticket");

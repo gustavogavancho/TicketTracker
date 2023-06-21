@@ -16,15 +16,11 @@ else
 
     @if (_tickets.Any())
     {
-
         <div class="mb-4">
             <p class="font-italic text-center">Do you have a ticket you'd like to share? <a href="add-ticket">Add it here</a>.</p>
         </div>
 
-        <ViewSwitcher Items="_tickets" Context="ticket">
-            <GridTemplate>
-                <TicketCard Ticket="ticket" OnSelected="HandleTicketSelected" />
-            </GridTemplate>
+        <TableView Items="_tickets" Context="ticket">
             <HeaderTemplate>
                 <th>Ticket Number</th>
                 <th>Nit</th>
@@ -40,15 +36,18 @@ else
                 <td>@ticket.DateCreated</td>
                 <td>@ticket.Amount</td>
                 <td class="text-end">
-                    <button @onclick="@(() => NavManager.NavigateTo($"/edit-ticket/{ticket.Id}"))" title="Edit" class="btn btn-outline-secondary">
-                        <i class="bi bi-pencil"></i>
-                    </button>
                     <button @onclick="() => HandleTicketSelected(ticket)" title="View" class="btn btn-primary">
                         <i class="bi bi-binoculars"></i>
                     </button>
+                    <button @onclick="@(() => NavManager.NavigateTo($"/edit-ticket/{ticket.Id}"))" title="Edit" class="btn btn-primary">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button @onclick="() => HandleTicketDeleted(ticket.Id)" title="View" class="btn btn-danger">
+                        <i class="bi bi-trash3"></i>
+                    </button>
                 </td>
             </RowTemplate>
-        </ViewSwitcher>
+        </TableView>
     }
     else
     {
@@ -68,9 +67,16 @@ else
 
     protected override async Task OnInitializedAsync()
     {
+        await GetTickets();
+    }
+
+    private async Task GetTickets()
+    {
         var response = await TicketConsumer.GetAllTickets();
         _tickets = response;
     }
 
     private void HandleTicketSelected(TicketDto ticketDto) => _selectedTicket = ticketDto;
+
+    private async Task HandleTicketDeleted(int ticketId) => await TicketConsumer.DeleteTicket(ticketId);
 }

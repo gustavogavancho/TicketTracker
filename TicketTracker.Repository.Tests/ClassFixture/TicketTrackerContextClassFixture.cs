@@ -30,6 +30,15 @@ public class TicketTrackerContextClassFixture
             Amount = 200.33m
         });
 
+        Context.Ticket.Add(new Ticket
+        {
+            Id = 2,
+            TicketNumber = "1234567890",
+            Description = "Test 2",
+            Nit = 1234567890,
+            Amount = 200.333m
+        });
+
         Context.SaveChanges();
     }
 }

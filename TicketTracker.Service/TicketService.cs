@@ -25,6 +25,13 @@ public class TicketService : ITicketService
         return _mapper.Map<TicketDto>(result);
     }
 
+    public async Task<bool> DeleteTicket(int ticketId)
+    {
+        var result = await _repository.DeleteTicket(ticketId);
+
+        return result;
+    }
+
     public async Task<List<TicketDto>> GetAllTickets()
     {
         var result = _mapper.Map<List<TicketDto>>(await _repository.GetAllTickets());

@@ -72,4 +72,17 @@ public class TicketRepositoryTests : IClassFixture<TicketTrackerContextClassFixt
         Assert.NotNull(sut);
         Assert.IsType<List<Ticket>>(sut);
     }
+
+    [Fact]
+    public async Task TicketRepository_DeleteTicket_Successfully()
+    {
+        //Arrange
+
+        //Act
+        var sut = await _repository.DeleteTicket(2);
+
+        //Assert
+        Assert.IsType<bool>(sut);
+        Assert.True(sut);
+    }
 }

@@ -8,4 +8,5 @@ public interface ITicketService
     Task<TicketDto> GetTicket(int ticketId);
     Task<TicketDto> UpdateTicket(TicketDto ticketDto);
     Task<List<TicketDto>> GetAllTickets();
+    Task<bool> DeleteTicket(int ticketId);
 }

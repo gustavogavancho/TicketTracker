@@ -23,6 +23,17 @@ public class TicketRepository : ITicketRepository
         return ticket;
     }
 
+    public async Task<bool> DeleteTicket(int ticketId)
+    {
+        var ticket = await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId);
+
+        _context.Ticket.Remove(ticket);
+
+        var result = await _context.SaveChangesAsync() == 1;
+
+        return result;
+    }
+
     public async Task<List<Ticket>> GetAllTickets()
     {
         var tickets = await _context.Ticket.ToListAsync();

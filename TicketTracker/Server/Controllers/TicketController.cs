@@ -46,4 +46,12 @@ public class TicketController : ControllerBase
 
         return Ok(result);
     }
+
+    [HttpDelete("{id:int}")]
+    public async Task<IActionResult> DeleteTicket(int id)
+    {
+        var result = await _service.DeleteTicket(id);
+
+        return Ok(result);
+    }
 }
