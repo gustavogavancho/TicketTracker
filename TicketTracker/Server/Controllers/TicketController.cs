@@ -39,11 +39,11 @@ public class TicketController : ControllerBase
         return Ok(result);
     }
 
-    [HttpPut("{id:int}")]
-    public async Task<IActionResult> UpdateTicket(int ticketId, TicketDto ticketDto)
+    [HttpPut("update")]
+    public async Task<IActionResult> UpdateTicket(TicketDto ticketDto)
     {
-        await _service.UpdateTicket(ticketId, ticketDto);
+        var result = await _service.UpdateTicket(ticketDto);
 
-        return NoContent();
+        return Ok(result);
     }
 }

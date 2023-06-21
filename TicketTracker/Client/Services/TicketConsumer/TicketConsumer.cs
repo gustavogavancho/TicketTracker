@@ -54,4 +54,20 @@ public class TicketConsumer : ITicketConsumer
 
         throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
     }
+
+    public async Task<TicketDto> UpdateTicket(TicketDto ticket)
+    {
+        var content = JsonConvert.SerializeObject(ticket);
+
+        var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
+
+        var response = await _httpClient.PutAsync("api/ticket/update", bodyContent);
+
+        string responseResult = await response.Content.ReadAsStringAsync();
+
+        if (response.IsSuccessStatusCode)
+            return JsonConvert.DeserializeObject<TicketDto>(responseResult);
+
+        throw new Exception($"Failed to retrieve insert ticket. Status code: {response.StatusCode}");
+    }
 }

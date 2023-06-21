@@ -21,7 +21,7 @@ else
 
     @if (_submitSuccessful)
     {
-        <SuccessAlert Message="Your trail has been edited successfully!" />
+        <SuccessAlert Message="Your ticket has been edited successfully!" />
     }
     else if (_errorMessage is not null)
     {
@@ -50,13 +50,14 @@ else
             _ticket.Id = TicketId;
             _ticket.TicketNumber = response.TicketNumber;
             _ticket.Nit = response.Nit;
+            _ticket.DateCreated = response.DateCreated;
             _ticket.Description = response.Description;
             _ticket.Amount = response.Amount;
             _ticket.Image = response.Image;
         }
         else
         {
-            _errorMessage = "There was a problem loading the trail.";
+            _errorMessage = "There was a problem loading the ticket.";
         }
 
         _isLoading = false;
@@ -64,6 +65,25 @@ else
 
     private async Task SubmitEditTicket(TicketDto ticket, IBrowserFile? image)
     {
-        
+        var response = await TicketConsumer.UpdateTicket(ticket);
+        if (response is null)
+        {
+            _submitSuccessful = false;
+            _errorMessage = "There was a problem saving your ticket.";
+        }
+        else
+        {
+            _ticket.TicketNumber = response.TicketNumber;
+            _ticket.Description = response.Description;
+            _ticket.Nit = response.Nit;
+            _ticket.Id = response.Id;
+            _ticket.Image = response.Image;
+            _ticket.Amount = response.Amount;
+            _ticket.DateCreated = response.DateCreated;
+
+            _submitSuccessful = true;
+        }
+
+        StateHasChanged();
     }
 }

@@ -39,7 +39,7 @@ public class TicketService : ITicketService
         return _mapper.Map<TicketDto>(result);
     }
 
-    public async Task<TicketDto> UpdateTicket(int ticketId, TicketDto ticketDto)
+    public async Task<TicketDto> UpdateTicket(TicketDto ticketDto)
     {
         var ticket = _mapper.Map<Ticket>(ticketDto);
 
