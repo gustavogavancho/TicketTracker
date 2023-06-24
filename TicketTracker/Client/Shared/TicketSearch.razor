@@ -5,9 +5,9 @@
     <p class="lead text-center">Collect all your tickets that are tax deductible in one single place!</p>
     <p class="mt-4">
         <input @onkeydown="SearchForTicket"
-               @bind="_searchTerm"
-               @bind:event="oninput"
-               @ref=myInput
+        @bind="_searchTerm"
+        @bind:event="oninput"
+        @ref=myInput
                type="text"
                placeholder="Search for a ticket..."
                class="form-control form-control-lg" />
@@ -28,5 +28,8 @@
 
     private void SearchForTicket(KeyboardEventArgs args)
     {
+        if (args.Key != "Enter") return;
+
+        NavManager.NavigateTo($"/search/{_searchTerm}");
     }
 }

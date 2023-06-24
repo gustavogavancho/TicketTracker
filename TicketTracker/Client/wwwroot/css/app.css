@@ -96,3 +96,14 @@ select.valid.modified {
     .blazor-error-boundary::after {
         content: "An error has occurred."
     }
+
+.no-tickets {
+    text-align: center;
+    margin-top: 100px;
+}
+
+    .no-tickets svg {
+        width: 200px;
+        color: #dee2e6;
+        margin-bottom: 30px;
+    }
