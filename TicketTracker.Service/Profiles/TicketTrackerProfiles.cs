@@ -8,6 +8,7 @@ public class TicketTrackerProfiles : Profile
 {
     public TicketTrackerProfiles()
     {
+        AllowNullCollections = true;
         CreateMap<Ticket, TicketDto>().ReverseMap();
     }
 }
