@@ -1,10 +1,12 @@
 ﻿@using System.Text
 
-<img src="@ImageDataUrl" alt="Image" class="image-display" />
+<img src="@ImageDataUrl" alt="Image" class="image-display" style="width:@(Width ?? "inherit")">
 
 @code {
     [Parameter]
     public byte[] ImageData { get; set; } = default!;
+    [Parameter]
+    public string? Width { get; set; }
 
     public string ImageDataUrl { get; private set; } = default!;
 
