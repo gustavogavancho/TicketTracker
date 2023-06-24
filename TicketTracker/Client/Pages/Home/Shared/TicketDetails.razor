@@ -6,21 +6,12 @@
             <div class="drawer-content">
                 @if(_activeTicket.Image is null)
                 {
-                    <img src="https://via.placeholder.com/640x656.jpg?text=No+Image+For+Ticket" />
+                    <img src="https://via.placeholder.com/640x688.jpg?text=No+Image+For+Ticket" />
                 }
                 else
                 {
-                    <ImageDisplay ImageData="_activeTicket.Image" />
+                    <ImageDisplay ImageData="_activeTicket.Image"/>
                 }
-@*                <div class="ticket-details">
-                    <h3>@_activeTicket.Description</h3>
-                    <h6 class="mb-3 text-muted"><span class="bi bi-receipt" title="Ticket Number"></span> @_activeTicket.TicketNumber</h6>
-                    <div class="d-flex justify-content-between mb-3">
-                        <span><span class="bi bi-coin mr-2" title="Amount"></span> @_activeTicket.Amount</span>
-                        <span><span class="bi bi-calendar-plus" title="Date"></span> @_activeTicket.DateCreated.ToShortDateString()</span>
-                    </div>
-                    <span><span class="bi bi-fingerprint mr-2" title="Nit"></span> @_activeTicket.Nit</span>
-                </div>*@
             </div>
             <div class="drawer-controls">
                 <button class="btn btn-secondary" @onclick="Close">Close</button>
