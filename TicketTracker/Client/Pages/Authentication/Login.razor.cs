@@ -12,11 +12,10 @@ public partial class Login
     public bool ShowSignInErrors { get; set; }
     public string Errors { get; set; }
 
-    [Inject]
-    public IAuthenticationService _authSerivce { get; set; }
-    [Inject]
-    public NavigationManager _navigationManager { get; set; }
+    [Inject] public IAuthenticationService _authSerivce { get; set; }
+    [Inject] public NavigationManager _navigationManager { get; set; }
     public string ReturnUrl { get; set; }
+
     private async Task LoginUser()
     {
         ShowSignInErrors = false;
