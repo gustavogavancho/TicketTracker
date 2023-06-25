@@ -2,6 +2,7 @@
 
 @inject ITicketConsumer TicketConsumer
 @inject NavigationManager NavManager
+@attribute [Authorize]
 
 <PageTitle>Search Trails - Blazing Trails</PageTitle>
 
@@ -25,7 +26,7 @@
 }
 else
 {
-    <TicketDetails Ticket="_selectedTicket" />
+    <TicketDetails Ticket="_selectedTicket" IsOpen="_isOpen" OnClose="OnCloseHandler" />
 
     @if(_searchResults.Any())
     {
@@ -51,7 +52,7 @@ else
                     <button @onclick="@(() => NavManager.NavigateTo($"/edit-ticket/{ticket.Id}"))" title="Edit" class="btn btn-primary">
                         <i class="bi bi-pencil"></i>
                     </button>
-                    <button @onclick="@(() => ShowConfirmationDialog(ticket.Id))" title="Delete" class="btn btn-primary">
+                    <button @onclick="@(() => ShowConfirmationDialog(ticket))" title="Delete" class="btn btn-primary">
                         <i class="bi bi-trash3"></i>
                     </button>
                 </td>
@@ -75,8 +76,8 @@ else
     private IEnumerable<TicketDto>? _searchResults;
     private IEnumerable<TicketDto> _cachedSearchResults = Array.Empty<TicketDto>();
     private TicketDto? _selectedTicket;
-    private int _ticketId;
     private bool showConfirmationDialog;
+    public bool _isOpen;
 
     [Parameter] public string SearchTerm { get; set; } = default!;
     [Parameter, SupplyParameterFromQuery] public int? MaxLength { get; set; }
@@ -97,9 +98,9 @@ else
                                   : allTickets.Where(x => x.TicketNumber.Contains(SearchTerm, StringComparison.CurrentCultureIgnoreCase)); 
     }
 
-    private void ShowConfirmationDialog(int ticketId)
+    private void ShowConfirmationDialog(TicketDto ticketDto)
     {
-        _ticketId = ticketId;
+        _selectedTicket = ticketDto;
         showConfirmationDialog = true;
     }
 
@@ -107,12 +108,22 @@ else
     {
         if (confirmed)
         {
-            await TicketConsumer.DeleteTicket(_ticketId);
+            await TicketConsumer.DeleteTicket(_selectedTicket.Id);
             await GetTickets();
         }
 
         showConfirmationDialog = false;
     }
 
-    private void HandleTicketSelected(TicketDto ticketDto) => _selectedTicket = ticketDto;
+    private void OnCloseHandler()
+    {
+        _selectedTicket = null;
+        _isOpen = false;
+    }
+
+    private void HandleTicketSelected(TicketDto ticketDto)
+    {
+        _selectedTicket = ticketDto;
+        _isOpen = true;
+    }
 }

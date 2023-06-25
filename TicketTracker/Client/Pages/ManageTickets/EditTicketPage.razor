@@ -1,6 +1,7 @@
 ﻿@page "/edit-ticket/{TicketId:int}"
 
 @inject ITicketConsumer TicketConsumer
+@attribute [Authorize]
 
 <PageTitle>Edit Ticket - Ticket Tracker</PageTitle>
 

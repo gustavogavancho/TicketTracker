@@ -1,0 +1,17 @@
+﻿@inject NavigationManager Navigation
+
+<div class="container text-end">
+    <AuthorizeView>
+        <div>
+            Hello, @context.User.Identity!.Name
+            <a href="#" @onclick="BeginSignOut">Log out</a>
+        </div>
+    </AuthorizeView>
+</div>
+
+@code {
+    private void BeginSignOut(MouseEventArgs args)
+    {
+        Navigation.NavigateTo("/logout");
+    }
+}
