@@ -12,6 +12,7 @@ public class Ticket
     public decimal? Amount { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public byte[]? Image { get; set; }
+    public string Owner { get; set; }
 }
 
 public class TicketConfig : IEntityTypeConfiguration<Ticket>
@@ -22,5 +23,6 @@ public class TicketConfig : IEntityTypeConfiguration<Ticket>
         builder.Property(x => x.Nit).IsRequired();
         builder.Property(x => x.Description).IsRequired();
         builder.Property(x => x.Amount).IsRequired();
+        builder.Property(x => x.Owner).IsRequired();
     }
 }

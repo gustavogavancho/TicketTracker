@@ -11,6 +11,7 @@ public class TicketDto
     public decimal? Amount { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public byte[]? Image { get; set; }
+    public string Owner { get; set; }
 }
 
 public class TicketValidator : AbstractValidator<TicketDto>

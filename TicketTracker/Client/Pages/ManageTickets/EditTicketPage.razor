@@ -55,6 +55,7 @@ else
             _ticket.Description = response.Description;
             _ticket.Amount = response.Amount;
             _ticket.Image = response.Image;
+            _ticket.Owner = response.Owner;
         }
         else
         {
@@ -81,6 +82,7 @@ else
             _ticket.Image = response.Image;
             _ticket.Amount = response.Amount;
             _ticket.DateCreated = response.DateCreated;
+            _ticket.Owner = response.Owner;
 
             _submitSuccessful = true;
         }

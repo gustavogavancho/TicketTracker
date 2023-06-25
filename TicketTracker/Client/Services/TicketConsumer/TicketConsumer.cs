@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Components.Authorization;
+using Newtonsoft.Json;
 using System.Text;
 using TicketTracker.Shared.Dtos;
 
@@ -7,14 +8,20 @@ namespace TicketTracker.Client.Services.TicketConsumer;
 public class TicketConsumer : ITicketConsumer
 {
     private readonly HttpClient _httpClient;
+    private readonly AuthenticationStateProvider _authStateProvider;
 
-    public TicketConsumer(HttpClient httpClient)
+    public TicketConsumer(HttpClient httpClient,
+        AuthenticationStateProvider authStateProvider)
     {
         _httpClient = httpClient;
+        _authStateProvider = authStateProvider;
     }
 
     public async Task<TicketDto> CreateTicket(TicketDto ticket)
     {
+        var authState = await _authStateProvider.GetAuthenticationStateAsync();
+        ticket.Owner = authState.User.Identity.Name;
+
         var content = JsonConvert.SerializeObject(ticket);
 
         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
@@ -70,6 +77,9 @@ public class TicketConsumer : ITicketConsumer
 
     public async Task<TicketDto> UpdateTicket(TicketDto ticket)
     {
+        var authState = await _authStateProvider.GetAuthenticationStateAsync();
+        ticket.Owner = authState.User.Identity.Name;
+
         var content = JsonConvert.SerializeObject(ticket);
 
         var bodyContent = new StringContent(content, Encoding.UTF8, "application/json");
