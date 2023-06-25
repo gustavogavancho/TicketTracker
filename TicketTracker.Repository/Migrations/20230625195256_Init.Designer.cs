@@ -11,8 +11,8 @@ using TicketTracker.Repository.Data;
 namespace TicketTracker.Repository.Migrations
 {
     [DbContext(typeof(TicketTrackerContext))]
-    [Migration("20230624235149_IdentityTablesAdded")]
-    partial class IdentityTablesAdded
+    [Migration("20230625195256_Init")]
+    partial class Init
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -233,6 +233,10 @@ namespace TicketTracker.Repository.Migrations
 
                     b.Property<long?>("Nit")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Owner")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<string>("TicketNumber")
                         .IsRequired()

@@ -38,12 +38,12 @@ public class DbInitializer : IDbInitializer
 
         IdentityUser user = new()
         {
-            UserName = "ggavancholeon@gmail.com",
+            UserName = "ggavanch@gmail.com",
             Email = "ggavancholeon@gmail.com",
             EmailConfirmed = true
         };
 
-        await _userManager.CreateAsync(user, "Gustavo1.@");
+        await _userManager.CreateAsync(user, "Gustavo1@@@");
 
         await _userManager.AddToRoleAsync(user, SD.Role_Admin);
     }

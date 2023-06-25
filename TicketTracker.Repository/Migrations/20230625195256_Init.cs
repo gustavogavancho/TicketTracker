@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace TicketTracker.Repository.Migrations
 {
     /// <inheritdoc />
-    public partial class IdentityTablesAdded : Migration
+    public partial class Init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -48,6 +48,25 @@ namespace TicketTracker.Repository.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AspNetUsers", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Ticket",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TicketNumber = table.Column<string>(type: "TEXT", nullable: false),
+                    Nit = table.Column<long>(type: "INTEGER", nullable: true),
+                    Description = table.Column<string>(type: "TEXT", nullable: false),
+                    Amount = table.Column<decimal>(type: "TEXT", nullable: true),
+                    DateCreated = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    Image = table.Column<byte[]>(type: "BLOB", nullable: true),
+                    Owner = table.Column<string>(type: "TEXT", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Ticket", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -211,6 +230,9 @@ namespace TicketTracker.Repository.Migrations
 
             migrationBuilder.DropTable(
                 name: "AspNetUserTokens");
+
+            migrationBuilder.DropTable(
+                name: "Ticket");
 
             migrationBuilder.DropTable(
                 name: "AspNetRoles");

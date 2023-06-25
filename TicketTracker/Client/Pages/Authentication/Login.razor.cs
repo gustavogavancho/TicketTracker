@@ -16,6 +16,16 @@ public partial class Login
     [Inject] public NavigationManager _navigationManager { get; set; }
     public string ReturnUrl { get; set; }
 
+    protected override void OnAfterRender(bool firstRender)
+    {
+        if (firstRender)
+        {
+            SignInRequest.UserName = "ggavanch@gmail.com";
+            SignInRequest.Password = "Gustavo1@@@";
+            StateHasChanged();
+        }
+    }
+
     private async Task LoginUser()
     {
         ShowSignInErrors = false;
