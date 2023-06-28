@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using TicketTracker.Service.Interfaces;
 using TicketTracker.Shared.Dtos;
+using TicketTracker.Shared.Pagination;
 
 namespace TicketTracker.Server.Controllers;
 
@@ -16,9 +18,11 @@ public class TicketController : ControllerBase
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTickets()
+    public async Task<IActionResult> GetTickets([FromQuery] ItemsParameters itemsParameters)
     {
-        var result = await _service.GetAllTickets();
+        var result = await _service.GetAllTickets(itemsParameters);
+
+        Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
 
         return Ok(result);
     }

@@ -61,6 +61,12 @@ else
                 </td>
             </RowTemplate>
         </TableView>
+
+        <div class="row">
+            <div class="col">
+                <Pagination MetaData="MetaData" Spread="2" SelectedPage="SelectedPage" />
+            </div>
+        </div>
     }
     else
     {
@@ -79,6 +85,8 @@ else
     private TicketDto? _selectedTicket;
     private bool showConfirmationDialog;
     public bool _isOpen;
+    public MetaData MetaData { get; set; }
+    private ItemsParameters _itemsParameters = new ();
 
     protected override async Task OnInitializedAsync()
     {
@@ -87,8 +95,16 @@ else
 
     private async Task GetTickets()
     {
-        var response = await TicketConsumer.GetAllTickets();
-        _tickets = response;
+        var response = await TicketConsumer.GetTickets(_itemsParameters);
+
+        _tickets = response.Items;
+        MetaData = response.MetaData;
+    }
+
+    private async Task SelectedPage(int page)
+    {
+        _itemsParameters.PageNumber = page;
+        await GetTickets();
     }
 
     private void ShowConfirmationDialog(TicketDto ticketDto)

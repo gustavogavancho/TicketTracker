@@ -1,7 +1,10 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
+using System.Net.Http;
 using System.Text;
+using System.Text.Json;
 using TicketTracker.Shared.Dtos;
+using TicketTracker.Shared.Pagination;
 
 namespace TicketTracker.Client.Services.TicketConsumer;
 
@@ -60,6 +63,26 @@ public class TicketConsumer : ITicketConsumer
         }
 
         throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
+    }
+
+    public async Task<PagingResponse<TicketDto>> GetTickets(ItemsParameters itemsParameters)
+    {
+        var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+        var queryStringUrl = $"api/ticket?pageNumber={itemsParameters.PageNumber}";
+
+        var response = await _httpClient.GetAsync(queryStringUrl);
+
+        var content = await response.Content.ReadAsStringAsync();
+        if (!response.IsSuccessStatusCode)
+        {
+            throw new ApplicationException(content);
+        }
+        var pagingResponse = new PagingResponse<TicketDto>
+        {
+            Items = System.Text.Json.JsonSerializer.Deserialize<List<TicketDto>>(content, options),
+            MetaData = System.Text.Json.JsonSerializer.Deserialize<MetaData>(response.Headers.GetValues("X-Pagination").First(), options)
+        };
+        return pagingResponse;
     }
 
     public async Task<TicketDto> GetTicket(int ticketId)

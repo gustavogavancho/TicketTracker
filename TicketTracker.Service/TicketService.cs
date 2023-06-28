@@ -3,6 +3,7 @@ using TicketTracker.Repository.Interfaces;
 using TicketTracker.Service.Interfaces;
 using TicketTracker.Shared.Dtos;
 using TicketTracker.Shared.Entities;
+using TicketTracker.Shared.Pagination;
 
 namespace TicketTracker.Service;
 
@@ -32,11 +33,12 @@ public class TicketService : ITicketService
         return result;
     }
 
-    public async Task<List<TicketDto>> GetAllTickets()
+    public async Task<PagedList<TicketDto>> GetAllTickets(ItemsParameters itemsParameters)
     {
         var result = _mapper.Map<List<TicketDto>>(await _repository.GetAllTickets());
 
-        return result;
+        return PagedList<TicketDto>
+        .ToPagedList(result, itemsParameters.PageNumber, itemsParameters.PageSize);
     }
 
     public async Task<TicketDto> GetTicket(int ticketId)

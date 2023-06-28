@@ -36,7 +36,7 @@ public class TicketRepository : ITicketRepository
 
     public async Task<List<Ticket>> GetAllTickets()
     {
-        var tickets = await _context.Ticket.ToListAsync();
+        var tickets = await _context.Ticket.OrderByDescending(x => x.DateCreated).ToListAsync();
 
         return tickets;
     }
