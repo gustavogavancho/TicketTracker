@@ -41,6 +41,22 @@ public class TicketRepository : ITicketRepository
         return tickets;
     }
 
+
+    public async Task<IEnumerable<Ticket>> GetAllTicketsByPage(int pageNumber, int pageSize)
+    {
+        var tickets = await _context.Ticket.OrderByDescending(x => x.DateCreated)
+                                           .Skip((pageNumber - 1) * pageSize)
+                                           .Take(pageSize)
+                                           .ToListAsync();
+
+        return tickets;
+    }
+
+    public async Task<int> CountAllTickets()
+    {
+        return await _context.Ticket.CountAsync();
+    }
+
     public async Task<Ticket> GetTicket(int ticketId)
     {
         var ticket = await _context.Ticket.FirstOrDefaultAsync(x => x.Id == ticketId);
