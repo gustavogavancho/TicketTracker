@@ -118,6 +118,10 @@ else
         if (confirmed)
         {
             await TicketConsumer.DeleteTicket(_selectedTicket.Id);
+
+            if (_tickets.Count() <= 1)
+                _itemsParameters.PageNumber = (_itemsParameters.PageNumber <= 1) ? 1 : _itemsParameters.PageNumber - 1;
+
             await GetTickets();
         }
 
