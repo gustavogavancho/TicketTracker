@@ -116,4 +116,18 @@ public class TicketConsumer : ITicketConsumer
 
         throw new Exception($"Failed to retrieve insert ticket. Status code: {response.StatusCode}");
     }
+
+    public async Task<byte[]> ExportToExcel()
+    {
+        var response = await _httpClient.GetAsync("api/ticket/exportTickets");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<byte[]>(content);
+        }
+
+        throw new Exception($"Failed to export list of tickets. Status code: {response.StatusCode}");
+
+    }
 }

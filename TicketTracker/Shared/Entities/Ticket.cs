@@ -7,9 +7,9 @@ public class Ticket
 {
     public int Id { get; set; }
     public string TicketNumber { get; set; } = default!;
-    public long? Nit { get; set; }
+    public long Nit { get; set; }
     public string Description { get; set; } = default!;
-    public decimal? Amount { get; set; }
+    public decimal Amount { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public byte[]? Image { get; set; }
     public string Owner { get; set; }

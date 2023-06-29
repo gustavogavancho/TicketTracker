@@ -33,7 +33,14 @@ public class TicketService : ITicketService
         return result;
     }
 
-    public async Task<PagedList<TicketDto>> GetAllTickets(ItemsParameters itemsParameters)
+    public async Task<IEnumerable<TicketDto>> GetAllTickets()
+    {
+        var result = _mapper.Map<IEnumerable<TicketDto>>(await _repository.GetAllTickets());
+
+        return result;
+    }
+
+    public async Task<PagedList<TicketDto>> GetAllTicketsByPage(ItemsParameters itemsParameters)
     {
         var result = _mapper.Map<List<TicketDto>>(await _repository.GetAllTicketsByPage(itemsParameters.PageNumber, itemsParameters.PageSize));
 

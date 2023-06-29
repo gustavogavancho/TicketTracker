@@ -10,19 +10,30 @@ namespace TicketTracker.Server.Controllers;
 [ApiController]
 public class TicketController : ControllerBase
 {
-    private readonly ITicketService _service;
+    private readonly ITicketService _ticketService;
+    private readonly IExcelService _excelService;
 
-    public TicketController(ITicketService service)
+    public TicketController(ITicketService ticketService,
+        IExcelService excelService)
     {
-        _service = service;
+        _ticketService = ticketService;
+        _excelService = excelService;
     }
 
     [HttpGet]
-    public async Task<IActionResult> GetTickets([FromQuery] ItemsParameters itemsParameters)
+    public async Task<IActionResult> GetTicketsByPage([FromQuery] ItemsParameters itemsParameters)
     {
-        var result = await _service.GetAllTickets(itemsParameters);
+        var result = await _ticketService.GetAllTicketsByPage(itemsParameters);
 
         Response.Headers.Add("X-Pagination", JsonConvert.SerializeObject(result.MetaData));
+
+        return Ok(result);
+    }
+
+    [HttpGet("exportTickets")]
+    public async Task<IActionResult> ExportTicketsToExcel()
+    {
+        var result = await _excelService.GenerateExcelFile();
 
         return Ok(result);
     }
@@ -30,7 +41,7 @@ public class TicketController : ControllerBase
     [HttpGet("{id:int}", Name = "GetById")]
     public async Task<IActionResult> GetTicket(int id)
     {
-        var result = await _service.GetTicket(id);
+        var result = await _ticketService.GetTicket(id);
 
         return Ok(result);
     }
@@ -38,7 +49,7 @@ public class TicketController : ControllerBase
     [HttpPost]
     public async Task<IActionResult> CreateTicket(TicketDto ticketDto)
     {
-        var result = await _service.CreateTicket(ticketDto);
+        var result = await _ticketService.CreateTicket(ticketDto);
 
         return Ok(result);
     }
@@ -46,7 +57,7 @@ public class TicketController : ControllerBase
     [HttpPut("update")]
     public async Task<IActionResult> UpdateTicket(TicketDto ticketDto)
     {
-        var result = await _service.UpdateTicket(ticketDto);
+        var result = await _ticketService.UpdateTicket(ticketDto);
 
         return Ok(result);
     }
@@ -54,7 +65,7 @@ public class TicketController : ControllerBase
     [HttpDelete("{id:int}")]
     public async Task<IActionResult> DeleteTicket(int id)
     {
-        var result = await _service.DeleteTicket(id);
+        var result = await _ticketService.DeleteTicket(id);
 
         return Ok(result);
     }

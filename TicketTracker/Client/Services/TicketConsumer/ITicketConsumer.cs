@@ -10,5 +10,6 @@ public interface ITicketConsumer
     Task<TicketDto> GetTicket(int ticketId);
     Task<TicketDto> UpdateTicket(TicketDto ticket);
     Task<bool> DeleteTicket(int ticketId);
+    Task<byte[]> ExportToExcel();
     Task<PagingResponse<TicketDto>> GetTickets(ItemsParameters itemsParameters);
 }
