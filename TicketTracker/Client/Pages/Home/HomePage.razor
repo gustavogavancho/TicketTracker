@@ -6,7 +6,6 @@
 @attribute [Authorize]
 
 <LoginStatus />
-
 <PageTitle>Ticket Tracker</PageTitle>
 
 @if (showConfirmationDialog)
@@ -27,7 +26,11 @@ else
     {
         <div class="mb-4">
             <p class="font-italic text-center">Do you have a ticket you'd like to share? <a href="add-ticket">Add it here</a>.</p>
-            <button class="btn btn-primary btn-sm float-end" @onclick="ExportToExcel">Export tickets to excel</button>
+
+            <div class="float-end">
+                <button class="btn btn-primary btn-sm mr-2" @onclick="ExportToExcel">Export tickets to excel</button>
+                <button class="btn btn-primary btn-sm" @onclick="ExportImages">Export images to zip</button>
+            </div>
         </div>
 
         <TableView Items="_tickets" Context="ticket">
@@ -149,5 +152,12 @@ else
 
         // Trigger the file download
         await JsRuntime.InvokeVoidAsync("saveAsFile", fileName, Convert.ToBase64String(excelFile), "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+    }
+
+    private async Task ExportImages()
+    {
+        var zipImages = await TicketConsumer.ExportImages();
+
+        await JsRuntime.InvokeVoidAsync("saveAsZip", "images.zip", Convert.ToBase64String(zipImages));
     }
 }

@@ -11,13 +11,13 @@ namespace TicketTracker.Server.Controllers;
 public class TicketController : ControllerBase
 {
     private readonly ITicketService _ticketService;
-    private readonly IExcelService _excelService;
+    private readonly IDonwloadService _downloadService;
 
     public TicketController(ITicketService ticketService,
-        IExcelService excelService)
+        IDonwloadService downloadService)
     {
         _ticketService = ticketService;
-        _excelService = excelService;
+        _downloadService = downloadService;
     }
 
     [HttpGet]
@@ -33,7 +33,15 @@ public class TicketController : ControllerBase
     [HttpGet("exportTickets")]
     public async Task<IActionResult> ExportTicketsToExcel()
     {
-        var result = await _excelService.GenerateExcelFile();
+        var result = await _downloadService.GenerateExcelFile();
+
+        return Ok(result);
+    }
+
+    [HttpGet("exportImages")]
+    public async Task<IActionResult> ExportImages()
+    {
+        var result = await _downloadService.GenerateZipImagesFile();
 
         return Ok(result);
     }

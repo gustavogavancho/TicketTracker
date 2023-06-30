@@ -1,6 +1,7 @@
 ﻿namespace TicketTracker.Service.Interfaces;
 
-public interface IExcelService
+public interface IDonwloadService
 {
     Task<byte[]> GenerateExcelFile();
+    Task<byte[]> GenerateZipImagesFile();
 }

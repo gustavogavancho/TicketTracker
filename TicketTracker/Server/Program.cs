@@ -54,7 +54,7 @@ builder.Services.AddScoped<ITicketRepository, TicketRepository>();
 builder.Services.AddScoped<ITicketService, TicketService>();
 builder.Services.AddScoped<IDbInitializer, DbInitializer>();
 builder.Services.AddScoped<IAccountService, AccountService>();
-builder.Services.AddScoped<IExcelService, ExcelService>();
+builder.Services.AddScoped<IDonwloadService, DownloadService>();
 
 var app = builder.Build();
 

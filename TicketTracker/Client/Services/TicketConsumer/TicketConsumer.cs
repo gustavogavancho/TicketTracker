@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components.Authorization;
 using Newtonsoft.Json;
-using System.Net.Http;
 using System.Text;
 using System.Text.Json;
 using TicketTracker.Shared.Dtos;
@@ -128,6 +127,18 @@ public class TicketConsumer : ITicketConsumer
         }
 
         throw new Exception($"Failed to export list of tickets. Status code: {response.StatusCode}");
+    }
 
+    public async Task<byte[]> ExportImages()
+    {
+        var response = await _httpClient.GetAsync("api/ticket/exportImages");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<byte[]>(content);
+        }
+
+        throw new Exception($"Failed to export list of tickets. Status code: {response.StatusCode}");
     }
 }
