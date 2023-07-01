@@ -24,6 +24,17 @@
         </FormFieldSet>
 
         <FormFieldSet Width="col-11">
+            <label for="expenseType" class="form-label text-muted"><b>Expense Type</b></label>
+            <InputSelect @bind-Value="_ticket.ExpenseType" class="form-select" id="expenseType">
+                <option value=""></option>
+                <option value="Hotels and restaurants">Hotels and restaurants</option>
+                <option value="Professional services">Professional services</option>
+                <option value="Real estate rental">Real estate rental</option>
+            </InputSelect>
+            <ValidationMessage For="@(() => _ticket.ExpenseType)" />
+        </FormFieldSet>
+
+        <FormFieldSet Width="col-11">
             <label for="amount" class="form-label text-muted"><b>Amount</b></label>
             <InputNumber @bind-Value="_ticket.Amount" class="form-control" id="amount" />
             <ValidationMessage For="@(() => _ticket.Amount)" />
@@ -84,6 +95,7 @@
             _ticket.Id = Ticket.Id;
             _ticket.TicketNumber = Ticket.TicketNumber;
             _ticket.Nit = Ticket.Nit;
+            _ticket.ExpenseType = Ticket.ExpenseType;
             _ticket.Description = Ticket.Description;
             _ticket.Amount = Ticket.Amount;
             _ticket.DateIssued = Ticket.DateIssued;

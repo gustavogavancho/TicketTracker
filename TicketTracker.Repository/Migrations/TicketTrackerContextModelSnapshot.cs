@@ -228,6 +228,10 @@ namespace TicketTracker.Repository.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("ExpenseType")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<byte[]>("Image")
                         .HasColumnType("BLOB");
 
