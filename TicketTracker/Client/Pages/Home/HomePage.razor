@@ -12,7 +12,10 @@
 {
     <ConfirmationDialog Message="Do you want to delete this item?" OnConfirmation="HandleConfirmation" />
 }
-
+@if (_isLoading)
+{
+    <Loading />
+}
 @if (_tickets == null)
 {
     <p>Loading Tickets...</p>
@@ -28,6 +31,10 @@ else
             <p class="font-italic text-center">Do you have a ticket you'd like to share? <a href="add-ticket">Add it here</a>.</p>
 
             <div class="float-end">
+                <span class="btn btn-success btn-sm mr-2" title="Total Amount"><i class="bi bi-coin"></i> S/. @_totalAmount</span>
+                <span class="btn btn-info btn-sm mr-2" title="Hotel & Rest. Services Deduction"><i class="bi bi-piggy-bank-fill"></i> S/. @_hotelRestaurantDedeuction</span>
+                <span class="btn btn-warning btn-sm mr-2" title="Professional Services Deduction"><i class="bi bi-piggy-bank-fill"></i> S/. @_professionalServicesDeduction</span>
+                <span class="btn btn-danger btn-sm mr-2" title="Real State Services Deduction"><i class="bi bi-piggy-bank-fill"></i> S/. @_realStateRentalDeduction</span>
                 <button class="btn btn-primary btn-sm mr-2" @onclick="ExportToExcel" title="Export to excel">
                     <i class="bi bi-file-spreadsheet-fill"></i>
                 </button>
@@ -94,14 +101,27 @@ else
     private TicketDto? _selectedTicket;
     private bool showConfirmationDialog;
     public bool _isOpen;
+    public bool _isLoading;
     public MetaData MetaData { get; set; }
-    private ItemsParameters _itemsParameters = new ();
+    private decimal _totalAmount;
+    private decimal _hotelRestaurantDedeuction;
+    private decimal _professionalServicesDeduction;
+    private decimal _realStateRentalDeduction;
+    private ItemsParameters _itemsParameters = new();
 
     protected override async Task OnInitializedAsync()
     {
         await GetTickets();
+        CalculateDeductions();
     }
 
+    private void CalculateDeductions()
+    {
+        _totalAmount = _tickets?.Sum(t => t.Amount) ?? 0;
+        _hotelRestaurantDedeuction = _tickets?.Where(x => x.ExpenseType == "Hotels and restaurants").Sum(t => t.Amount) * 15 / 100 ?? 0;
+        _professionalServicesDeduction = _tickets?.Where(x => x.ExpenseType == "Professional services").Sum(t => t.Amount) * 30 / 100 ?? 0;
+        _realStateRentalDeduction = _tickets?.Where(x => x.ExpenseType == "Real estate rental").Sum(t => t.Amount) * 30 / 100 ?? 0;
+    }
     private async Task GetTickets()
     {
         var response = await TicketConsumer.GetTickets(_itemsParameters);
@@ -127,13 +147,17 @@ else
         if (confirmed)
         {
             await TicketConsumer.DeleteTicket(_selectedTicket.Id);
+            showConfirmationDialog = false;
+            _isLoading = true;
+            StateHasChanged();
 
             if (_tickets.Count() <= 1)
                 _itemsParameters.PageNumber = (_itemsParameters.PageNumber <= 1) ? 1 : _itemsParameters.PageNumber - 1;
 
             await GetTickets();
+            CalculateDeductions();
+            _isLoading = false;
         }
-
         showConfirmationDialog = false;
     }
 
