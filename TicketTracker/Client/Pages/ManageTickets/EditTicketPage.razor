@@ -1,6 +1,7 @@
 ﻿@page "/edit-ticket/{TicketId:int}"
 
 @inject ITicketConsumer TicketConsumer
+@inject IJSRuntime JsRuntime
 @attribute [Authorize]
 
 <PageTitle>Edit Ticket - Ticket Tracker</PageTitle>
@@ -92,5 +93,6 @@ else
         }
 
         StateHasChanged();
+        await JsRuntime.InvokeVoidAsync("scrollUtils.scrollToTop");
     }
 }

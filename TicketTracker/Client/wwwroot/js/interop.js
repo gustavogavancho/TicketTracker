@@ -29,3 +29,9 @@ function base64ToBlob(base64) {
     }
     return new Blob(byteArrays, { type: 'application/zip' });
 }
+
+window.scrollUtils = {
+    scrollToTop: function () {
+        window.scrollTo(0, 0);
+    }
+};
