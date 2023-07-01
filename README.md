@@ -1,4 +1,4 @@
-# TicketTracker
+# Ticket Tracker
 
 Blazor WA application to collect all your tax deductible tickets in one single place.
 
