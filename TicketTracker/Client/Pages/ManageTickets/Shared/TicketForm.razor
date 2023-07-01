@@ -30,6 +30,12 @@
         </FormFieldSet>
 
         <FormFieldSet Width="col-11">
+            <label for="dateIssued" class="form-label text-muted"><b>Date Issued</b></label>
+            <InputDate @bind-Value="_ticket.DateIssued" class="form-control" id="amount" />
+            <ValidationMessage For="@(() => _ticket.DateIssued)" />
+        </FormFieldSet>
+
+        <FormFieldSet Width="col-11">
             <label for="image" class="form-label text-muted"><b>Image</b></label>
             @if (_ticket.Image is null)
             {
@@ -80,6 +86,7 @@
             _ticket.Nit = Ticket.Nit;
             _ticket.Description = Ticket.Description;
             _ticket.Amount = Ticket.Amount;
+            _ticket.DateIssued = Ticket.DateIssued;
             _ticket.Image = Ticket.Image;
         }
     }

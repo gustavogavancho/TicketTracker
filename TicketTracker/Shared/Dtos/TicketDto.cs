@@ -9,6 +9,7 @@ public class TicketDto
     public long? Nit { get; set; }
     public string Description { get; set; } = default!;
     public decimal? Amount { get; set; }
+    public DateTime? DateIssued { get; set; }
     public DateTime DateCreated { get; set; } = DateTime.Now;
     public byte[]? Image { get; set; }
     public string Owner { get; set; }
@@ -22,5 +23,6 @@ public class TicketValidator : AbstractValidator<TicketDto>
         RuleFor(x => x.Nit).NotEmpty();
         RuleFor(x => x.Description).NotEmpty();
         RuleFor(x => x.Amount).NotEmpty().GreaterThan(0);
+        RuleFor(x => x.DateIssued).NotEmpty();
     }
 }

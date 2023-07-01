@@ -42,7 +42,7 @@ else
                 <th>Ticket Number</th>
                 <th>Nit</th>
                 <th>Description </th>
-                <th>Date Created</th>
+                <th>Date Issued</th>
                 <th>Amount</th>
                 <th></th>
             </HeaderTemplate>
@@ -50,7 +50,7 @@ else
                 <th scope="col">@ticket.TicketNumber</th>
                 <td>@ticket.Nit</td>
                 <td>@ticket.Description</td>
-                <td>@ticket.DateCreated.ToShortDateString()</td>
+                <td>@ticket.DateIssued.Value.ToShortDateString()</td>
                 <td>@ticket.Amount</td>
                 <td class="text-end">
                     <button @onclick="() => HandleTicketSelected(ticket)" title="View Image" class="btn btn-primary">
