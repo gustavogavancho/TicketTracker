@@ -36,7 +36,7 @@ public class TicketRepository : ITicketRepository
 
     public async Task<List<Ticket>> GetAllTickets()
     {
-        var tickets = await _context.Ticket.OrderByDescending(x => x.DateCreated).ToListAsync();
+        var tickets = await _context.Ticket.OrderByDescending(x => x.DateIssued).ToListAsync();
 
         return tickets;
     }
@@ -44,7 +44,7 @@ public class TicketRepository : ITicketRepository
 
     public async Task<IEnumerable<Ticket>> GetAllTicketsByPage(int pageNumber, int pageSize)
     {
-        var tickets = await _context.Ticket.OrderByDescending(x => x.DateCreated)
+        var tickets = await _context.Ticket.OrderByDescending(x => x.DateIssued)
                                            .Skip((pageNumber - 1) * pageSize)
                                            .Take(pageSize)
                                            .ToListAsync();
