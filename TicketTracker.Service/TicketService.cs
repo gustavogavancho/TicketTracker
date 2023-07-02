@@ -42,10 +42,15 @@ public class TicketService : ITicketService
 
     public async Task<PagedList<TicketDto>> GetAllTicketsByPage(ItemsParameters itemsParameters)
     {
-        var result = _mapper.Map<List<TicketDto>>(await _repository.GetAllTicketsByPage(itemsParameters.PageNumber, itemsParameters.PageSize));
+        Task <IEnumerable<Ticket>> tickets = _repository.GetAllTicketsByPage(itemsParameters.PageNumber, itemsParameters.PageSize);
+        Task<int> countedTickets = _repository.CountAllTickets();
+
+        await Task.WhenAll(tickets, countedTickets);
+
+        var result = _mapper.Map<List<TicketDto>>(tickets.Result);
 
         return PagedList<TicketDto>
-        .ToPagedList(await _repository.CountAllTickets(),
+        .ToPagedList(countedTickets.Result,
                      result, 
                      itemsParameters.PageNumber, 
                      itemsParameters.PageSize);

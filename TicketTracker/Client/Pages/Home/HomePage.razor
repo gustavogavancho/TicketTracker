@@ -142,8 +142,10 @@ else
 
     private async Task SelectedPage(int page)
     {
+        _isLoading = true;
         _itemsParameters.PageNumber = page;
         await GetTickets();
+        _isLoading = false;
     }
 
     private void ShowConfirmationDialog(TicketDto ticketDto)
