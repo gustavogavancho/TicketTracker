@@ -38,6 +38,22 @@ public class TicketController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("getTotalAmount")]
+    public async Task<IActionResult> GetTotalAmount()
+    {
+        var result = await _ticketService.GetTotalAmount();
+
+        return Ok(result);
+    }
+
+    [HttpGet("getTotalAmount/{expenseType}")]
+    public async Task<IActionResult> GetTotalAmount(string expenseType)
+    {
+        var result = await _ticketService.GetTotalAmoutByType(expenseType);
+
+        return Ok(result);
+    }
+
     [HttpGet("exportTickets")]
     public async Task<IActionResult> ExportTicketsToExcel()
     {

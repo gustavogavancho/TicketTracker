@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
 using TicketTracker.Shared.Dtos;
+using TicketTracker.Shared.Entities;
 using TicketTracker.Shared.Pagination;
 
 namespace TicketTracker.Client.Services.TicketConsumer;
@@ -140,5 +141,31 @@ public class TicketConsumer : ITicketConsumer
         }
 
         throw new Exception($"Failed to export list of tickets. Status code: {response.StatusCode}");
+    }
+
+    public async Task<decimal?> GetTotalAmount()
+    {
+        var response = await _httpClient.GetAsync("api/ticket/getTotalAmount");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<decimal?>(content);
+        }
+
+        throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
+    }
+
+    public async Task<decimal?> GetTotalAmoutByType(string ticketType)
+    {
+        var response = await _httpClient.GetAsync($"api/ticket/getTotalAmount/{ticketType}");
+
+        if (response.IsSuccessStatusCode)
+        {
+            var content = await response.Content.ReadAsStringAsync();
+            return JsonConvert.DeserializeObject<decimal?>(content);
+        }
+
+        throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
     }
 }

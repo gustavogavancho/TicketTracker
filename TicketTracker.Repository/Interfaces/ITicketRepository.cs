@@ -7,6 +7,8 @@ public interface ITicketRepository
     Task<Ticket> CreateTicket(Ticket ticket);
     Task<Ticket> GetTicket(int ticketId);
     Task<Ticket> UpdateTicket(Ticket ticket);
+    Task<decimal?> GetTotalAmount();
+    Task<decimal?> GetTotalAmoutByType(string ticketType);
     Task<List<Ticket>> GetAllTickets();
     Task<IEnumerable<Ticket>> GetAllTicketsByPage(int pageNumber, int pageSize);
     Task<int> CountAllTickets();

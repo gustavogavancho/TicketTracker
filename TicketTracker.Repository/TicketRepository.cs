@@ -72,4 +72,18 @@ public class TicketRepository : ITicketRepository
 
         return result.Entity;
     }
+
+    public async Task<decimal?> GetTotalAmount()
+    {
+        var result = await _context.Ticket.SumAsync(x => x.Amount);
+
+        return result;
+    }
+
+    public async Task<decimal?> GetTotalAmoutByType(string ticketType)
+    {
+        var result = await _context.Ticket.Where(x => x.ExpenseType == ticketType).SumAsync(x => x.Amount);
+
+        return result;
+    }
 }

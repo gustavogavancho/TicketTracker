@@ -58,6 +58,20 @@ public class TicketService : ITicketService
         return _mapper.Map<TicketDto>(result);
     }
 
+    public async Task<decimal?> GetTotalAmount()
+    {
+        var result = await _repository.GetTotalAmount();
+
+        return result;
+    }
+
+    public async Task<decimal?> GetTotalAmoutByType(string ticketType)
+    {
+        var result = await _repository.GetTotalAmoutByType(ticketType);
+
+        return result;
+    }
+
     public async Task<TicketDto> UpdateTicket(TicketDto ticketDto)
     {
         var ticket = _mapper.Map<Ticket>(ticketDto);

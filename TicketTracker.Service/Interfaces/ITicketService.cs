@@ -11,4 +11,6 @@ public interface ITicketService
     Task<PagedList<TicketDto>> GetAllTicketsByPage(ItemsParameters itemsParameters);
     Task<IEnumerable<TicketDto>> GetAllTickets();
     Task<bool> DeleteTicket(int ticketId);
+    Task<decimal?> GetTotalAmount();
+    Task<decimal?> GetTotalAmoutByType(string ticketType);
 }

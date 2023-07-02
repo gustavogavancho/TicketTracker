@@ -13,4 +13,6 @@ public interface ITicketConsumer
     Task<byte[]> ExportToExcel();
     Task<byte[]> ExportImages();
     Task<PagingResponse<TicketDto>> GetTicketsByPage(ItemsParameters itemsParameters);
+    Task<decimal?> GetTotalAmount();
+    Task<decimal?> GetTotalAmoutByType(string ticketType);
 }

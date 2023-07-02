@@ -5,9 +5,6 @@ using TicketTracker.Repository.Interfaces;
 using TicketTracker.Service.Interfaces;
 using TicketTracker.Shared.Entities;
 using System.IO.Compression;
-using SharpCompress.Common;
-using SharpCompress.Writers;
-using System.IO;
 
 namespace TicketTracker.Service;
 
@@ -88,19 +85,46 @@ public class DownloadService : IDonwloadService
 
         using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
         {
-            foreach (var ticket in tickets)
-            {
-                if (ticket.Image is null) continue;
-                var entryName = $"{ticket.DateCreated.ToString("dd-MM-yy")}_{ticket.TicketNumber}_{ticket.Nit}.jpg";
-                var entry = archive.CreateEntry(entryName, CompressionLevel.Optimal);
+            var tasks = tickets
+                .Where(ticket => ticket.Image != null)
+                .Select(async ticket =>
+                {
+                    var entryName = $"{ticket.DateCreated.ToString("dd-MM-yy")}_{ticket.TicketNumber}_{ticket.Nit}.jpg";
+                    var entry = archive.CreateEntry(entryName, CompressionLevel.Optimal);
 
-                using var entryStream = entry.Open();
-                await entryStream.WriteAsync(ticket.Image, 0, ticket.Image.Length);
-            }
+                    using var entryStream = entry.Open();
+                    await entryStream.WriteAsync(ticket.Image, 0, ticket.Image.Length);
+                });
+
+            await Task.WhenAll(tasks);
         }
 
         memoryStream.Position = 0;
 
         return memoryStream.ToArray();
     }
+
+    //public async Task<byte[]> GenerateZipImagesFile()
+    //{
+    //    var tickets = await _ticketRepository.GetAllTickets();
+
+    //    using var memoryStream = new MemoryStream();
+
+    //    using (var archive = new ZipArchive(memoryStream, ZipArchiveMode.Create, true))
+    //    {
+    //        foreach (var ticket in tickets)
+    //        {
+    //            if (ticket.Image is null) continue;
+    //            var entryName = $"{ticket.DateCreated.ToString("dd-MM-yy")}_{ticket.TicketNumber}_{ticket.Nit}.jpg";
+    //            var entry = archive.CreateEntry(entryName, CompressionLevel.Optimal);
+
+    //            using var entryStream = entry.Open();
+    //            await entryStream.WriteAsync(ticket.Image, 0, ticket.Image.Length);
+    //        }
+    //    }
+
+    //    memoryStream.Position = 0;
+
+    //    return memoryStream.ToArray();
+    //}
 }

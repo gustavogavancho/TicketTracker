@@ -111,18 +111,27 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        await GetTickets();
-        await CalculateDeductions();
+        Task task1 = GetTickets();
+        Task task2 = CalculateDeductions();
+
+        await Task.WhenAll(task1, task2);
     }
 
     private async Task CalculateDeductions()
     {
-        var tickets = await TicketConsumer.GetAllTickets();
-        _totalAmount = tickets?.Sum(t => t.Amount) ?? 0;
-        _hotelRestaurantDedeuction = tickets?.Where(x => x.ExpenseType == "Hotels and restaurants").Sum(t => t.Amount) * 15 / 100 ?? 0;
-        _professionalServicesDeduction = tickets?.Where(x => x.ExpenseType == "Professional services").Sum(t => t.Amount) * 30 / 100 ?? 0;
-        _realStateRentalDeduction = tickets?.Where(x => x.ExpenseType == "Real estate rental").Sum(t => t.Amount) * 30 / 100 ?? 0;
+        Task<decimal?> totalAmount = TicketConsumer.GetTotalAmount();
+        Task<decimal?> hotelRestaurantDedeuction = TicketConsumer.GetTotalAmoutByType("Hotels and restaurants");
+        Task<decimal?> professionalServicesDeduction = TicketConsumer.GetTotalAmoutByType("Professional services");
+        Task<decimal?> realStateRentalDeduction = TicketConsumer.GetTotalAmoutByType("Real estate rental");
+
+        await Task.WhenAll(totalAmount, hotelRestaurantDedeuction, professionalServicesDeduction, professionalServicesDeduction, realStateRentalDeduction);
+
+        _totalAmount = totalAmount.Result ?? 0;
+        _hotelRestaurantDedeuction = hotelRestaurantDedeuction.Result * 15 / 100 ?? 0;
+        _professionalServicesDeduction = professionalServicesDeduction.Result * 30 / 100 ?? 0;
+        _realStateRentalDeduction = realStateRentalDeduction.Result * 30 / 100 ?? 0;
     }
+
     private async Task GetTickets()
     {
         var response = await TicketConsumer.GetTicketsByPage(_itemsParameters);
@@ -185,8 +194,12 @@ else
 
     private async Task ExportImages()
     {
+        _isLoading = true;
+
         var zipImages = await TicketConsumer.ExportImages();
 
-        await JsRuntime.InvokeVoidAsync("saveAsZip", "images.zip", Convert.ToBase64String(zipImages));
+        await JsRuntime.InvokeVoidAsync("saveAsZip", "Tickets.zip", Convert.ToBase64String(zipImages));
+
+        _isLoading = false;
     }
 }
