@@ -63,7 +63,7 @@ public class DownloadService : IDonwloadService
                 if (property.Name == "Image") continue;
                 Cell cell = new Cell
                 {
-                    DataType = CellValues.String,
+                    DataType = property.Name == "Amount" ? CellValues.Number : CellValues.String,
                     CellValue = new CellValue(property.GetValue(item)?.ToString() ?? "")
                 };
                 dataRow.AppendChild(cell);
