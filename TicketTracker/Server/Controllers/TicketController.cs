@@ -30,6 +30,14 @@ public class TicketController : ControllerBase
         return Ok(result);
     }
 
+    [HttpGet("getAllTickets")]
+    public async Task<IActionResult> GetAllTickets()
+    {
+        var result = await _ticketService.GetAllTickets();
+
+        return Ok(result);
+    }
+
     [HttpGet("exportTickets")]
     public async Task<IActionResult> ExportTicketsToExcel()
     {

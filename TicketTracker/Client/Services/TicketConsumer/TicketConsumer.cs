@@ -53,7 +53,7 @@ public class TicketConsumer : ITicketConsumer
 
     public async Task<List<TicketDto>> GetAllTickets()
     {
-        var response = await _httpClient.GetAsync("api/ticket");
+        var response = await _httpClient.GetAsync("api/ticket/getAllTickets");
 
         if (response.IsSuccessStatusCode)
         {
@@ -64,7 +64,7 @@ public class TicketConsumer : ITicketConsumer
         throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
     }
 
-    public async Task<PagingResponse<TicketDto>> GetTickets(ItemsParameters itemsParameters)
+    public async Task<PagingResponse<TicketDto>> GetTicketsByPage(ItemsParameters itemsParameters)
     {
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
         var queryStringUrl = $"api/ticket?pageNumber={itemsParameters.PageNumber}";

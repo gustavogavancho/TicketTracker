@@ -12,5 +12,5 @@ public interface ITicketConsumer
     Task<bool> DeleteTicket(int ticketId);
     Task<byte[]> ExportToExcel();
     Task<byte[]> ExportImages();
-    Task<PagingResponse<TicketDto>> GetTickets(ItemsParameters itemsParameters);
+    Task<PagingResponse<TicketDto>> GetTicketsByPage(ItemsParameters itemsParameters);
 }

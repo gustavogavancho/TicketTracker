@@ -36,10 +36,10 @@ else
                 <span class="btn btn-warning btn-sm mr-2" title="Professional Services Deduction"><i class="bi bi-piggy-bank-fill"></i> S/. @_professionalServicesDeduction</span>
                 <span class="btn btn-danger btn-sm mr-2" title="Real State Services Deduction"><i class="bi bi-piggy-bank-fill"></i> S/. @_realStateRentalDeduction</span>
                 <button class="btn btn-primary btn-sm mr-2" @onclick="ExportToExcel" title="Export to excel">
-                    <i class="bi bi-file-spreadsheet-fill"></i>
+                    <i class="bi bi-file-spreadsheet-fill"></i> Export to excel
                 </button>
                 <button class="btn btn-primary btn-sm" @onclick="ExportImages" title="Export images">
-                    <i class="bi bi-file-zip-fill"></i>
+                    <i class="bi bi-file-zip-fill"></i> Export images
                 </button>
             </div>
         </div>
@@ -112,19 +112,20 @@ else
     protected override async Task OnInitializedAsync()
     {
         await GetTickets();
-        CalculateDeductions();
+        await CalculateDeductions();
     }
 
-    private void CalculateDeductions()
+    private async Task CalculateDeductions()
     {
-        _totalAmount = _tickets?.Sum(t => t.Amount) ?? 0;
-        _hotelRestaurantDedeuction = _tickets?.Where(x => x.ExpenseType == "Hotels and restaurants").Sum(t => t.Amount) * 15 / 100 ?? 0;
-        _professionalServicesDeduction = _tickets?.Where(x => x.ExpenseType == "Professional services").Sum(t => t.Amount) * 30 / 100 ?? 0;
-        _realStateRentalDeduction = _tickets?.Where(x => x.ExpenseType == "Real estate rental").Sum(t => t.Amount) * 30 / 100 ?? 0;
+        var tickets = await TicketConsumer.GetAllTickets();
+        _totalAmount = tickets?.Sum(t => t.Amount) ?? 0;
+        _hotelRestaurantDedeuction = tickets?.Where(x => x.ExpenseType == "Hotels and restaurants").Sum(t => t.Amount) * 15 / 100 ?? 0;
+        _professionalServicesDeduction = tickets?.Where(x => x.ExpenseType == "Professional services").Sum(t => t.Amount) * 30 / 100 ?? 0;
+        _realStateRentalDeduction = tickets?.Where(x => x.ExpenseType == "Real estate rental").Sum(t => t.Amount) * 30 / 100 ?? 0;
     }
     private async Task GetTickets()
     {
-        var response = await TicketConsumer.GetTickets(_itemsParameters);
+        var response = await TicketConsumer.GetTicketsByPage(_itemsParameters);
 
         _tickets = response.Items;
         MetaData = response.MetaData;
@@ -155,7 +156,7 @@ else
                 _itemsParameters.PageNumber = (_itemsParameters.PageNumber <= 1) ? 1 : _itemsParameters.PageNumber - 1;
 
             await GetTickets();
-            CalculateDeductions();
+            await CalculateDeductions();
             _isLoading = false;
         }
         showConfirmationDialog = false;
