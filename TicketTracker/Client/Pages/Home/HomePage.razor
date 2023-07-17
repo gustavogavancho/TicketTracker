@@ -58,7 +58,7 @@ else
                 <td>@ticket.Nit</td>
                 <td>@ticket.Description</td>
                 <td>@ticket.DateIssued.Value.ToShortDateString()</td>
-                <td>@ticket.Amount</td>
+                <td>@(ticket.Amount.Value.ToString("N2"))</td>
                 <td class="text-end">
                     <button @onclick="() => HandleTicketSelected(ticket)" title="View Image" class="btn btn-primary">
                         <i class="bi bi-binoculars"></i>
