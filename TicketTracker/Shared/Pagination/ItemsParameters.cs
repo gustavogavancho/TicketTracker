@@ -16,4 +16,6 @@ public class ItemsParameters
             _pageSize = (value > maxPageSize) ? maxPageSize : value;
         }
     }
+
+    public int Year { get; set; } = 2024;
 }

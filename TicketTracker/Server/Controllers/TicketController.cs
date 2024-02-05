@@ -31,41 +31,41 @@ public class TicketController : ControllerBase
     }
 
     [HttpGet("getAllTickets")]
-    public async Task<IActionResult> GetAllTickets()
+    public async Task<IActionResult> GetAllTickets([FromQuery] int year)
     {
-        var result = await _ticketService.GetAllTickets();
+        var result = await _ticketService.GetAllTickets(year);
 
         return Ok(result);
     }
 
     [HttpGet("getTotalAmount")]
-    public async Task<IActionResult> GetTotalAmount()
+    public async Task<IActionResult> GetTotalAmount([FromQuery]int year)
     {
-        var result = await _ticketService.GetTotalAmount();
+        var result = await _ticketService.GetTotalAmount(year);
 
         return Ok(result);
     }
 
     [HttpGet("getTotalAmount/{expenseType}")]
-    public async Task<IActionResult> GetTotalAmount(string expenseType)
+    public async Task<IActionResult> GetTotalAmount(string expenseType, [FromQuery] int year)
     {
-        var result = await _ticketService.GetTotalAmoutByType(expenseType);
+        var result = await _ticketService.GetTotalAmoutByType(expenseType, year);
 
         return Ok(result);
     }
 
     [HttpGet("exportTickets")]
-    public async Task<IActionResult> ExportTicketsToExcel()
+    public async Task<IActionResult> ExportTicketsToExcel([FromQuery] int year)
     {
-        var result = await _downloadService.GenerateExcelFile();
+        var result = await _downloadService.GenerateExcelFile(year);
 
         return Ok(result);
     }
 
     [HttpGet("exportImages")]
-    public async Task<IActionResult> ExportImages()
+    public async Task<IActionResult> ExportImages([FromQuery] int year)
     {
-        var result = await _downloadService.GenerateZipImagesFile();
+        var result = await _downloadService.GenerateZipImagesFile(year);
 
         return Ok(result);
     }

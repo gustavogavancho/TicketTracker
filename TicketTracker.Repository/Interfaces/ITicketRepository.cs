@@ -7,10 +7,10 @@ public interface ITicketRepository
     Task<Ticket> CreateTicket(Ticket ticket);
     Task<Ticket> GetTicket(int ticketId);
     Task<Ticket> UpdateTicket(Ticket ticket);
-    Task<decimal?> GetTotalAmount();
-    Task<decimal?> GetTotalAmoutByType(string ticketType);
-    Task<List<Ticket>> GetAllTickets();
-    Task<IEnumerable<Ticket>> GetAllTicketsByPage(int pageNumber, int pageSize);
-    Task<int> CountAllTickets();
+    Task<decimal?> GetTotalAmount(int year);
+    Task<decimal?> GetTotalAmoutByType(string ticketType, int year);
+    Task<List<Ticket>> GetAllTickets(int year);
+    Task<IEnumerable<Ticket>> GetAllTicketsByPage(int pageNumber, int pageSize, int year);
+    Task<int> CountAllTickets(int year);
     Task<bool> DeleteTicket(int ticketId);
 }

@@ -17,7 +17,7 @@ public class DownloadService : IDonwloadService
         _ticketRepository = ticketRepository;
     }
 
-    public async Task<byte[]> GenerateExcelFile()
+    public async Task<byte[]> GenerateExcelFile(int year)
     {
         using MemoryStream memStream = new MemoryStream();
 
@@ -54,7 +54,7 @@ public class DownloadService : IDonwloadService
         sheetData.AppendChild(headerRow);
 
         // Add data rows
-        foreach (var item in await _ticketRepository.GetAllTickets())
+        foreach (var item in await _ticketRepository.GetAllTickets(year))
         {
             Row dataRow = new Row();
             foreach (var property in typeof(Ticket).GetProperties())
@@ -76,9 +76,9 @@ public class DownloadService : IDonwloadService
         return memStream.ToArray();
     }
 
-    public async Task<byte[]> GenerateZipImagesFile()
+    public async Task<byte[]> GenerateZipImagesFile(int year)
     {
-        var tickets = await _ticketRepository.GetAllTickets();
+        var tickets = await _ticketRepository.GetAllTickets(year);
 
         using var memoryStream = new MemoryStream();
 

@@ -3,7 +3,6 @@ using Newtonsoft.Json;
 using System.Text;
 using System.Text.Json;
 using TicketTracker.Shared.Dtos;
-using TicketTracker.Shared.Entities;
 using TicketTracker.Shared.Pagination;
 
 namespace TicketTracker.Client.Services.TicketConsumer;
@@ -68,7 +67,7 @@ public class TicketConsumer : ITicketConsumer
     public async Task<PagingResponse<TicketDto>> GetTicketsByPage(ItemsParameters itemsParameters)
     {
         var options = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
-        var queryStringUrl = $"api/ticket?pageNumber={itemsParameters.PageNumber}";
+        var queryStringUrl = $"api/ticket?pageNumber={itemsParameters.PageNumber}&year={itemsParameters.Year}";
 
         var response = await _httpClient.GetAsync(queryStringUrl);
 
@@ -117,9 +116,9 @@ public class TicketConsumer : ITicketConsumer
         throw new Exception($"Failed to retrieve insert ticket. Status code: {response.StatusCode}");
     }
 
-    public async Task<byte[]> ExportToExcel()
+    public async Task<byte[]> ExportToExcel(int year)
     {
-        var response = await _httpClient.GetAsync("api/ticket/exportTickets");
+        var response = await _httpClient.GetAsync($"api/ticket/exportTickets?year={year}");
 
         if (response.IsSuccessStatusCode)
         {
@@ -130,9 +129,9 @@ public class TicketConsumer : ITicketConsumer
         throw new Exception($"Failed to export list of tickets. Status code: {response.StatusCode}");
     }
 
-    public async Task<byte[]> ExportImages()
+    public async Task<byte[]> ExportImages(int year)
     {
-        var response = await _httpClient.GetAsync("api/ticket/exportImages");
+        var response = await _httpClient.GetAsync($"api/ticket/exportImages?year={year}");
 
         if (response.IsSuccessStatusCode)
         {
@@ -143,9 +142,9 @@ public class TicketConsumer : ITicketConsumer
         throw new Exception($"Failed to export list of tickets. Status code: {response.StatusCode}");
     }
 
-    public async Task<decimal?> GetTotalAmount()
+    public async Task<decimal?> GetTotalAmount(int year)
     {
-        var response = await _httpClient.GetAsync("api/ticket/getTotalAmount");
+        var response = await _httpClient.GetAsync($"api/ticket/getTotalAmount?year={year}");
 
         if (response.IsSuccessStatusCode)
         {
@@ -156,9 +155,9 @@ public class TicketConsumer : ITicketConsumer
         throw new Exception($"Failed to retrieve list of tickets. Status code: {response.StatusCode}");
     }
 
-    public async Task<decimal?> GetTotalAmoutByType(string ticketType)
+    public async Task<decimal?> GetTotalAmoutByType(string ticketType, int year)
     {
-        var response = await _httpClient.GetAsync($"api/ticket/getTotalAmount/{ticketType}");
+        var response = await _httpClient.GetAsync($"api/ticket/getTotalAmount/{ticketType}?year={year}");
 
         if (response.IsSuccessStatusCode)
         {

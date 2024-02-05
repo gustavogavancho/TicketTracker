@@ -9,8 +9,8 @@ public interface ITicketService
     Task<TicketDto> GetTicket(int ticketId);
     Task<TicketDto> UpdateTicket(TicketDto ticketDto);
     Task<PagedList<TicketDto>> GetAllTicketsByPage(ItemsParameters itemsParameters);
-    Task<IEnumerable<TicketDto>> GetAllTickets();
+    Task<IEnumerable<TicketDto>> GetAllTickets(int year);
     Task<bool> DeleteTicket(int ticketId);
-    Task<decimal?> GetTotalAmount();
-    Task<decimal?> GetTotalAmoutByType(string ticketType);
+    Task<decimal?> GetTotalAmount(int year);
+    Task<decimal?> GetTotalAmoutByType(string ticketType, int year);
 }

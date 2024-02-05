@@ -10,9 +10,9 @@ public interface ITicketConsumer
     Task<TicketDto> GetTicket(int ticketId);
     Task<TicketDto> UpdateTicket(TicketDto ticket);
     Task<bool> DeleteTicket(int ticketId);
-    Task<byte[]> ExportToExcel();
-    Task<byte[]> ExportImages();
+    Task<byte[]> ExportToExcel(int year);
+    Task<byte[]> ExportImages(int year);
     Task<PagingResponse<TicketDto>> GetTicketsByPage(ItemsParameters itemsParameters);
-    Task<decimal?> GetTotalAmount();
-    Task<decimal?> GetTotalAmoutByType(string ticketType);
+    Task<decimal?> GetTotalAmount(int year);
+    Task<decimal?> GetTotalAmoutByType(string ticketType, int year);
 }

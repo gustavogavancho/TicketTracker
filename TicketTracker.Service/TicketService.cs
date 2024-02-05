@@ -33,17 +33,17 @@ public class TicketService : ITicketService
         return result;
     }
 
-    public async Task<IEnumerable<TicketDto>> GetAllTickets()
+    public async Task<IEnumerable<TicketDto>> GetAllTickets(int year)
     {
-        var result = _mapper.Map<IEnumerable<TicketDto>>(await _repository.GetAllTickets());
+        var result = _mapper.Map<IEnumerable<TicketDto>>(await _repository.GetAllTickets(year));
 
         return result;
     }
 
     public async Task<PagedList<TicketDto>> GetAllTicketsByPage(ItemsParameters itemsParameters)
     {
-        Task <IEnumerable<Ticket>> tickets = _repository.GetAllTicketsByPage(itemsParameters.PageNumber, itemsParameters.PageSize);
-        Task<int> countedTickets = _repository.CountAllTickets();
+        Task <IEnumerable<Ticket>> tickets = _repository.GetAllTicketsByPage(itemsParameters.PageNumber, itemsParameters.PageSize, itemsParameters.Year);
+        Task<int> countedTickets = _repository.CountAllTickets(itemsParameters.Year);
 
         await Task.WhenAll(tickets, countedTickets);
 
@@ -63,16 +63,16 @@ public class TicketService : ITicketService
         return _mapper.Map<TicketDto>(result);
     }
 
-    public async Task<decimal?> GetTotalAmount()
+    public async Task<decimal?> GetTotalAmount(int year)
     {
-        var result = await _repository.GetTotalAmount();
+        var result = await _repository.GetTotalAmount(year);
 
         return result;
     }
 
-    public async Task<decimal?> GetTotalAmoutByType(string ticketType)
+    public async Task<decimal?> GetTotalAmoutByType(string ticketType, int year)
     {
-        var result = await _repository.GetTotalAmoutByType(ticketType);
+        var result = await _repository.GetTotalAmoutByType(ticketType, year);
 
         return result;
     }

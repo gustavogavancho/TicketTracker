@@ -31,6 +31,13 @@ else
             <p class="font-italic text-center">Do you have a ticket you'd like to share? <a href="add-ticket">Add it here</a>.</p>
 
             <div class="float-end">
+                <span class="btn btn-sm mr-2" title="Total Amount">
+                    <i class="bi bi-calendar"></i>
+                    <select class="form-select form-select-sm mr-2 custom-select" @onchange="OnYearChanged">
+                        <option value="2024" selected>2024</option>
+                        <option value="2023">2023</option>
+                    </select>
+                </span>
                 <span class="btn btn-success btn-sm mr-2" title="Total Amount"><i class="bi bi-coin"></i> S/. @_totalAmount</span>
                 <span class="btn btn-info btn-sm mr-2" title="Hotel & Rest. Services Deduction"><i class="bi bi-piggy-bank-fill"></i> S/. @_hotelRestaurantDedeuction</span>
                 <span class="btn btn-warning btn-sm mr-2" title="Professional Services Deduction"><i class="bi bi-piggy-bank-fill"></i> S/. @_professionalServicesDeduction</span>
@@ -109,6 +116,8 @@ else
     private decimal _realStateRentalDeduction;
     private ItemsParameters _itemsParameters = new();
 
+    private int year = 2024;
+
     protected override async Task OnInitializedAsync()
     {
         Task task1 = GetTickets();
@@ -119,10 +128,10 @@ else
 
     private async Task CalculateDeductions()
     {
-        Task<decimal?> totalAmount = TicketConsumer.GetTotalAmount();
-        Task<decimal?> hotelRestaurantDedeuction = TicketConsumer.GetTotalAmoutByType("Hotels and restaurants");
-        Task<decimal?> professionalServicesDeduction = TicketConsumer.GetTotalAmoutByType("Professional services");
-        Task<decimal?> realStateRentalDeduction = TicketConsumer.GetTotalAmoutByType("Real estate rental");
+        Task<decimal?> totalAmount = TicketConsumer.GetTotalAmount(_itemsParameters.Year);
+        Task<decimal?> hotelRestaurantDedeuction = TicketConsumer.GetTotalAmoutByType("Hotels and restaurants", _itemsParameters.Year);
+        Task<decimal?> professionalServicesDeduction = TicketConsumer.GetTotalAmoutByType("Professional services", _itemsParameters.Year);
+        Task<decimal?> realStateRentalDeduction = TicketConsumer.GetTotalAmoutByType("Real estate rental", _itemsParameters.Year);
 
         await Task.WhenAll(totalAmount, hotelRestaurantDedeuction, professionalServicesDeduction, professionalServicesDeduction, realStateRentalDeduction);
 
@@ -187,7 +196,7 @@ else
 
     private async Task ExportToExcel()
     {
-        var excelFile = await TicketConsumer.ExportToExcel();
+        var excelFile = await TicketConsumer.ExportToExcel(_itemsParameters.Year);
         string fileName = $"Tickets_{DateTime.Now:yyyyMMddHHmmss}.xlsx";
 
         // Trigger the file download
@@ -198,10 +207,23 @@ else
     {
         _isLoading = true;
 
-        var zipImages = await TicketConsumer.ExportImages();
+        var zipImages = await TicketConsumer.ExportImages(_itemsParameters.Year);
 
         await JsRuntime.InvokeVoidAsync("saveAsZip", "Tickets.zip", Convert.ToBase64String(zipImages));
 
+        _isLoading = false;
+    }
+
+    private async Task OnYearChanged(ChangeEventArgs e)
+    {
+        _isLoading = true;
+        _itemsParameters.Year = int.Parse(e.Value.ToString());
+        _itemsParameters.PageNumber = 1;
+
+        Task task1 = GetTickets();
+        Task task2 = CalculateDeductions();
+
+        await Task.WhenAll(task1, task2);
         _isLoading = false;
     }
 }

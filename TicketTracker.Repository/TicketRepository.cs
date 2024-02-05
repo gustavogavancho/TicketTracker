@@ -34,17 +34,18 @@ public class TicketRepository : ITicketRepository, IDisposable
         return result;
     }
 
-    public async Task<List<Ticket>> GetAllTickets()
+    public async Task<List<Ticket>> GetAllTickets(int year)
     {
-        var tickets = await _context.Ticket.AsNoTracking().OrderByDescending(x => x.DateIssued).ToListAsync();
+        var tickets = await _context.Ticket.Where(x=> x.DateIssued.Value.Date.Year == year).AsNoTracking().OrderByDescending(x => x.DateIssued).ToListAsync();
 
         return tickets;
     }
 
 
-    public async Task<IEnumerable<Ticket>> GetAllTicketsByPage(int pageNumber, int pageSize)
+    public async Task<IEnumerable<Ticket>> GetAllTicketsByPage(int pageNumber, int pageSize, int year)
     {
         var tickets = await _context.Ticket.AsNoTracking().OrderByDescending(x => x.DateIssued)
+                                           .Where(x => x.DateIssued.Value.Year == year)
                                            .Skip((pageNumber - 1) * pageSize)
                                            .Take(pageSize)
                                            .ToListAsync();
@@ -52,9 +53,9 @@ public class TicketRepository : ITicketRepository, IDisposable
         return tickets;
     }
 
-    public async Task<int> CountAllTickets()
+    public async Task<int> CountAllTickets(int year)
     {
-        return await _context.Ticket.AsNoTracking().CountAsync();
+        return await _context.Ticket.Where(x => x.DateIssued.Value.Year == year).AsNoTracking().CountAsync();
     }
 
     public async Task<Ticket> GetTicket(int ticketId)
@@ -73,16 +74,16 @@ public class TicketRepository : ITicketRepository, IDisposable
         return result.Entity;
     }
 
-    public async Task<decimal?> GetTotalAmount()
+    public async Task<decimal?> GetTotalAmount(int year)
     {
-        var result = await _context.Ticket.AsNoTracking().SumAsync(x => x.Amount);
+        var result = await _context.Ticket.Where(x => x.DateIssued.Value.Year == year).AsNoTracking().SumAsync(x => x.Amount);
 
         return result;
     }
 
-    public async Task<decimal?> GetTotalAmoutByType(string ticketType)
+    public async Task<decimal?> GetTotalAmoutByType(string ticketType, int year)
     {
-        var result = await _context.Ticket.AsNoTracking().Where(x => x.ExpenseType == ticketType).SumAsync(x => x.Amount);
+        var result = await _context.Ticket.AsNoTracking().Where(x => x.DateIssued.Value.Year == year && x.ExpenseType == ticketType).SumAsync(x => x.Amount);
 
         return result;
     }

@@ -2,6 +2,6 @@
 
 public interface IDonwloadService
 {
-    Task<byte[]> GenerateExcelFile();
-    Task<byte[]> GenerateZipImagesFile();
+    Task<byte[]> GenerateExcelFile(int year);
+    Task<byte[]> GenerateZipImagesFile(int year);
 }
